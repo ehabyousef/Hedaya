@@ -30,20 +30,26 @@ export default function About() {
                 <div className="col-12 col-md-6">
                     <h3>Our Vision</h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
-                        hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque,
-                        aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula
-                        sollicitudin laoreet viverra, tortor libero sodales leo, eget
-                        blandit nunc tortor eu nibh.
+                        Our vision is to provide a diverse range of Islamic products that
+                        cater to the spiritual and lifestyle needs of both men and women,
+                        adhering strictly to halal standards. We envision a platform where
+                        individuals can seamlessly integrate their faith into their everyday
+                        lives, finding products that align with their Islamic values while
+                        embracing modernity.
                     </p>
                 </div>
                 <div className="col-12 col-md-6">
                     <h3>Our Mission</h3>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum
-                        ipsam deserunt ipsa consectetur reprehenderit facere ut animi, alias
-                        est tenetur magni numquam quas maxime, unde, accusantium aperiam?
-                        Atque, ullam similique?
+                        Our mission is to curate a comprehensive collection of
+                        halal-certified products, spanning from fashion and accessories to
+                        personal care and home essentials. We strive to foster a community
+                        where customers feel empowered to express their faith through their
+                        choices, while also promoting ethical sourcing and sustainable
+                        practices. Through our commitment to quality, inclusivity, and
+                        authenticity, we aim to become the premier destination for Islamic
+                        products globally, enriching lives and strengthening faith
+                        connections.
                     </p>
                 </div>
             </div>
@@ -193,50 +199,33 @@ export default function About() {
                 >
                     <SwiperSlide className={style.swiper_slide}>
                         <div className="d-flex justify-content-center align-items-center flex-column gap-2 text-center">
-                            <motion.h2
-                            >
+                            <motion.h2>
                                 <FaUserCircle />
                             </motion.h2>
                             <motion.p>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam
-                                ullam inventore accusantium vero iusto velit alias cupiditate
-                                repellat, consectetur harum deleniti possimus illo nobis similique
-                                expedita atque, magnam vel neque?
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                Aliquam ullam inventore accusantium vero iusto velit alias
+                                cupiditate repellat, consectetur harum deleniti possimus illo
+                                nobis similique expedita atque, magnam vel neque?
                             </motion.p>
-                            <motion.p
-                            >
-                                Ahmed ammer
-                            </motion.p>
-                            <motion.p
-                            >
-                                customer
-                            </motion.p>
+                            <motion.p>Ahmed ammer</motion.p>
+                            <motion.p>customer</motion.p>
                         </div>
                     </SwiperSlide>
                     <SwiperSlide className={style.swiper_slide}>
                         <div className="d-flex justify-content-center align-items-center flex-column gap-2 text-center">
-                            <motion.h2
-
-                            >
+                            <motion.h2>
                                 <FaUserCircle />
                             </motion.h2>
 
                             <motion.p>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam
-                                ullam inventore accusantium vero iusto velit alias cupiditate
-                                repellat, consectetur harum deleniti possimus illo nobis similique
-                                expedita atque, magnam vel neque?
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                Aliquam ullam inventore accusantium vero iusto velit alias
+                                cupiditate repellat, consectetur harum deleniti possimus illo
+                                nobis similique expedita atque, magnam vel neque?
                             </motion.p>
-                            <motion.p
-
-                            >
-                                Ahmed ammer
-                            </motion.p>
-                            <motion.p
-
-                            >
-                                customer
-                            </motion.p>
+                            <motion.p>Ahmed ammer</motion.p>
+                            <motion.p>customer</motion.p>
                         </div>
                     </SwiperSlide>
                 </Swiper>

@@ -13,8 +13,8 @@ export default function Footer() {
                         <img src={logo} alt="logo" />
                         <p>You place to Found the Product that confirm Your thougths</p>
                         <div className="d-flex gap-4">
-                            <Link to={'/'} className="d"><FaFacebook size={30} /></Link>
-                            <Link to={'/'} className="d"><FaLinkedinIn size={30} /></Link>
+                            <Link to={'/https://www.facebook.com/profile.php?id=100080623690922'} className="d"><FaFacebook size={30} /></Link>
+                            <Link to={'/https://www.linkedin.com/in/ehabyousef/'} className="d"><FaLinkedinIn size={30} /></Link>
                             <Link to={'/'} className="d"><FaInstagram size={30} /></Link>
                         </div>
                     </div>

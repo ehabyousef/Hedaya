@@ -18,6 +18,7 @@ import soak from "../../images/soak.jpg";
 import women from "../../images/women.jpg";
 import men from "../../images/men.jpg";
 import Topselling from '../../components/Topselling';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
     return (
@@ -40,7 +41,7 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         className={style.animated_button}>
-                        <span className={style.text}>Shop now</span>
+                        <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                         <span className={style.circle}></span>
                         <svg xmlns="http://www.w3.org/2000/svg" className={style.arr_1} viewBox="0 0 24 24">
                             <path
@@ -61,7 +62,7 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         className={style.animated_button}>
-                        <span className={style.text}>Shop now</span>
+                        <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                         <span className={style.circle}></span>
                         <svg xmlns="http://www.w3.org/2000/svg" className={style.arr_1} viewBox="0 0 24 24">
                             <path
@@ -81,7 +82,7 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                         className={style.animated_button}>
-                        <span className={style.text}>Shop now</span>
+                        <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                         <span className={style.circle}></span>
                         <svg xmlns="http://www.w3.org/2000/svg" className={style.arr_1} viewBox="0 0 24 24">
                             <path
@@ -100,15 +101,15 @@ export default function Home() {
                             <p className='m-0'>new arrival</p>
                             <h3>Mos7af & mo7afes</h3>
                             <button className={style.animated_button}>
-                                <span className={style.text}>Shop now</span>
+                                <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                                 <span className={style.circle}></span>
                             </button>
                         </div>
                         <div className="d-flex w-100 h-100 flex-column gap-3 justify-content-end align-items-start" id={style.sec_card}>
                             <p className='m-0'>new arrival</p>
-                            <h3>seb7a & accessory</h3>
+                            <Link to={'/allProducts'}>seb7a & accessory</Link>
                             <button className={style.animated_button}>
-                                <span className={style.text}>Shop now</span>
+                                <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                                 <span className={style.circle}></span>
                             </button>
                         </div>
@@ -118,7 +119,7 @@ export default function Home() {
                             <p className='m-0'>new arrival</p>
                             <h3>Hijab & negab</h3>
                             <button className={style.animated_button}>
-                                <span className={style.text}>Shop now</span>
+                                <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                                 <span className={style.circle}></span>
                             </button>
                         </div>
@@ -127,9 +128,9 @@ export default function Home() {
                 <div className="col-4 d-none d-lg-block">
                     <div className="d-flex h-100 flex-column gap-3 justify-content-end align-items-start" id={style.fourth_card}>
                         <p className='m-0'>new arrival</p>
-                        <h3>Keftan & galabia</h3>
+                        <h3 >Keftan & galabia</h3>
                         <button className={style.animated_button}>
-                            <span className={style.text}>Shop now</span>
+                            <Link to={'/allProducts'} className={style.text}>Shop now</Link>
                             <span className={style.circle}></span>
                         </button>
                     </div>
@@ -146,9 +147,9 @@ export default function Home() {
                         <div className={style.body}>
                             <h3>Men's</h3>
                             <h4>125 product</h4>
-                            <div>
+                            <Link to={'/allProducts'}>
                                 shop Now
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -158,9 +159,9 @@ export default function Home() {
                         <div className={style.body}>
                             <h3>women's</h3>
                             <h4>125 product</h4>
-                            <div>
+                            <Link to={'/allProducts'}>
                                 shop Now
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -170,9 +171,9 @@ export default function Home() {
                         <div className={style.body}>
                             <h3>things</h3>
                             <h4>125 product</h4>
-                            <div>
+                            <Link to={'/allProducts'}>
                                 shop Now
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

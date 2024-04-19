@@ -10,7 +10,7 @@ body {
   --yellow_color: #dec56b;
   --white_color: #fcfcfc;
   --black: #0a0a0a;
-  --rosas: #F1E9D5;
+  --rosas: #f1e9d5;
   --brown: #413029;
   --yellow: #f1cd60;
   --beige: #d7cab8;
@@ -31,4 +31,35 @@ ul {
 a {
   color: unset;
   text-decoration: none;
+}
+
+.scrollTop {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  border: 0;
+  background: transparent;
+}
+.scrollTop svg {
+  width: 3rem;
+  height: 3rem !important;
+  fill: var(--blue);
+}
+.scrollTop:hover {
+  animation: bounce 0.8s infinite;
+}
+@keyframes bounce {
+  0% {
+    bottom: 10px;
+  }
+  60% {
+    bottom: 20px;
+  }
+  100% {
+    bottom: 10px;
+  }
+}
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

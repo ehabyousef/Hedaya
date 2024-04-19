@@ -12,6 +12,15 @@
           "width: fit-content"
         ]
       }
+    ],
+    "detect-css-reflows/layout": "off",
+    "compat-api/html": [
+      "default",
+      {
+        "ignore": [
+          "meta[name=theme-color]"
+        ]
+      }
     ]
   }
 }
