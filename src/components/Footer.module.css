@@ -1,0 +1,9 @@
+.footer {
+  background-color: var(--brown);
+  color: var(--white_color);
+}
+#first img {
+  width: 100px;
+  height: 100px;
+  display: block;
+}

@@ -1,0 +1,187 @@
+.swiper {
+  height: 62vh;
+  border-radius: 20px;
+}
+
+.swiper_slide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
+  padding: 0 3rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.swiper_slide:nth-child(1n) {
+  background-image: url("../../images/background3.jpg");
+}
+
+.swiper_slide:nth-child(2n) {
+  background-image: url("../../images/background1.jpg");
+}
+
+.swiper_slide:nth-child(3n) {
+  background-image: url("../../images/background2.jpg");
+}
+
+/* main button  */
+.animated_button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 22px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #1f387e;
+  box-shadow: 0 0 0 2px #ffffff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated_button svg {
+  /* position: absolute; */
+  width: 24px;
+  fill: #1f387e;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated_button .arr-1 {
+  right: 16px;
+}
+
+.animated_button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: #c5e5e4;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated_button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated_button:hover {
+  color: #212121;
+}
+
+.animated_button:hover .text {
+  transform: translateX(2px);
+}
+
+.animated_button:hover .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+#first_card,
+#sec_card,
+#third_card,
+#fourth_card {
+  /* background: url("../../images/background1.jpg"); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 3rem 2rem;
+  color: var(--white_color);
+}
+#first_card {
+  background: url("../../images/moshaf.jpg");
+  align-items: flex-end !important;
+}
+#sec_card {
+  background: url("../../images/sebha.jpg");
+}
+#third_card {
+  background: url("../../images//hijab.jpg");
+  color: var(--black);
+}
+#fourth_card {
+  background: url("../../images/Kaftan\ Hooded.jpg");
+  color: var(--black);
+}
+#service > div {
+  border-right: 1px solid var(--gray);
+}
+#service > div:last-of-type {
+  border-right: none;
+}
+/* sections  */
+.content {
+  position: relative;
+  /* max-width: 300px; */
+  height: 300px;
+  background-color: transparent;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px var(--brown);
+}
+.img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.body {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  bottom: -15%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  transition: 0.3s;
+  background-color: var(--beige);
+}
+.body div {
+  color: var(--blue);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.body div:hover {
+  text-decoration: underline;
+}
+@media (min-width: 768px) and (max-width: 1000px) {
+  .body {
+    bottom: -19%;
+  }
+}
+.content:hover .body {
+  bottom: 0%;
+}
+#view {
+  border-top: 1px solid var(--blue);
+  padding: 0.5rem 0;
+}
+#view div:last-of-type {
+  border-left: 1px solid var(--blue);
+  padding: 0 10px;
+}
+.content:hover .Btn {
+  display: flex;
+}

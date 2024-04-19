@@ -1,0 +1,33 @@
+.head_table {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.18px;
+  text-transform: capitalize;
+}
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1.5rem;
+  border-bottom: 1px solid var(--text_black) !important;
+}
+.Table_head {
+  border-radius: 10px;
+  background: rgba(104, 101, 101, 0.24);
+  height: 72px;
+}
+.body_table {
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.18px;
+  text-transform: capitalize;
+}

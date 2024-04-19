@@ -1,0 +1,49 @@
+.call {
+  background-color: var(--blue);
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  border-radius: 35%;
+  fill: var(--white_color);
+}
+#contain {
+  background-color: #0e424c;
+}
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.inputs input,
+.inputs textarea {
+  background-color: var(--gray);
+  resize: none;
+  color: var(--white_color);
+}
+.inputs textarea {
+  height: 200px;
+}
+
+.inputs input:focus,
+.inputs textarea:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-color: var(--gray);
+  color: var(--black);
+}
+.place::placeholder {
+  color: var(--black);
+}
+.place {
+  color: var(--black) !important;
+}
+.message {
+  text-align: left;
+  color: var(--white_color);
+  width: 100%;
+  font-size: 14px;
+  margin: 15px 0px;
+  border-left: 2px solid var(--gray);
+  padding-left: 10px;
+}

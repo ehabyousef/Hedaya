@@ -1,0 +1,122 @@
+#menu {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 110vh;
+  z-index: 10;
+  transition: 0.8s;
+  background-color: var(--rosas);
+}
+#menu2 {
+  color: var(--black_color);
+  position: absolute;
+  right: 0;
+  height: 100%;
+  top: 0;
+  z-index: 10;
+  transition: 0.8s;
+  background-color: var(--rosas);
+}
+.menuClicked {
+  top: 0px !important;
+  color: var(--black_color);
+}
+.menuClicked2 {
+  top: 110vh !important;
+  color: var(--black_color);
+}
+@media (max-width: 765px) {
+  #menu2 {
+    top: 0vh;
+    color: var(--black_color);
+    height: 50% !important;
+    position: absolute !important;
+  }
+  #menu {
+    top: 80vh;
+    color: var(--black_color);
+    height: 50% !important;
+    position: absolute !important;
+  }
+  .menuClicked {
+    top: 41vh !important;
+    color: var(--black_color);
+    height: 50% !important;
+    position: absolute !important;
+  }
+  .menuClicked2 {
+    top: -45vh !important;
+    color: var(--black_color);
+    height: 50% !important;
+    position: absolute !important;
+  }
+  #logDiv {
+    height: 50% !important;
+    position: absolute !important;
+    overflow: hidden !important;
+    bottom: 0% !important;
+  }
+  #regDiv {
+    height: 50% !important;
+    position: absolute !important;
+    overflow: hidden !important;
+    top: 0% !important;
+  }
+}
+.contain {
+  position: absolute;
+}
+/* button  */
+.cta {
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 2rem 0;
+}
+
+.cta span {
+  padding-bottom: 7px;
+  letter-spacing: 4px;
+  font-size: 14px;
+  padding-right: 15px;
+  text-transform: uppercase;
+  color: var(--black_color);
+}
+
+.cta svg {
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+  fill: var(--black_color);
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active svg {
+  transform: scale(0.9);
+}
+
+.hover_underline_animation {
+  position: relative;
+  color: black;
+  padding-bottom: 20px;
+}
+
+.hover_underline_animation:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--black_color);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.cta:hover .hover_underline_animation:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

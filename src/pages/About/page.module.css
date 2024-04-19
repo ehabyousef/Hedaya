@@ -1,0 +1,52 @@
+.head_bg {
+  background-image: url("../../images//about.jpeg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 50vh;
+  color: black;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+.card_info_1,
+.card_info_2,
+.card_info_3 {
+  height: 50vh;
+  /* width: 30vw; */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.card_info_1 {
+  background-image: url("../../images/bob.jpeg");
+}
+.card_info_2 {
+  background-image: url("../../images/mar.jpeg");
+}
+.card_info_3 {
+  background-image: url("../../images/ui.jpeg");
+}
+.content {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: white;
+  display: none;
+  transition: 0.4s;
+}
+.card_info_1:hover .content,
+.card_info_2:hover .content,
+.card_info_3:hover .content {
+  display: flex;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.7;
+}

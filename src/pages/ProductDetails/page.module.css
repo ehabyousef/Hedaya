@@ -1,0 +1,46 @@
+.smallImg {
+  width: 10vw;
+  height: 15vh;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+}
+.smallImg:hover {
+  border: 1px solid var(--blue);
+}
+@media (max-width: 768px) {
+  .smallImg {
+    width: 20vw;
+  }
+}
+@media (max-width: 580px) {
+  .smallImg {
+    width: 27vw;
+  }
+}
+/* .swiper {
+  height: 350px;
+  margin: 1rem 0;
+} */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

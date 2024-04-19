@@ -1,0 +1,139 @@
+.group {
+  position: relative;
+}
+
+.input {
+  font-size: 16px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 60%;
+  border: none;
+  border-bottom: 1px solid #515151;
+  background: transparent;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.label {
+  color: #fcfcfc;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  -webkit-transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  transition: 0.2s ease all;
+}
+
+.input:focus ~ label,
+.input:valid ~ label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+.submit {
+  /* margin: 20px 0 20px 0;  */
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--white_color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--white_color);
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+}
+.submit:active {
+  box-shadow: 0px 0px var(--yellow_color);
+  transform: translate(3px, 3px);
+}
+.loader {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  position: relative;
+}
+.loader::after,
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: absolute;
+  left: 0;
+  top: 1px;
+  animation: animloader 2s linear infinite;
+}
+.loader::after {
+  animation-delay: 1s;
+}
+
+@keyframes animloader {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.select {
+  margin: 10px 10px 10px 0;
+  border-radius: 2px;
+  padding: 10px;
+  background-color: transparent;
+  outline: none;
+  width: 100%;
+  text-align: center;
+  border: none;
+  overflow: hidden;
+}
+.select option {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  transition: 0.3s;
+  border: 1px solid var(--white_color);
+  border-radius: 4px;
+  width: 70%;
+  margin-right: auto;
+  position: relative;
+}
+.select option:checked {
+  background-color: transparent;
+  font-size: 18px;
+  color: var(--white_color);
+  transform: scale(0.96);
+}
+
+.select option:checked::after {
+  position: absolute;
+  content: "";
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--white_color);
+}
+.butonsDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 765px) {
+  .input {
+    width: 100% !important;
+  }
+  .butonsDiv .submit:last-of-type {
+    width: 22vw !important;
+    font-size: 14px;
+  }
+}
