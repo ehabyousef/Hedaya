@@ -8,6 +8,7 @@ import { fetchAllProducts } from '../../redux/slices/getAllProducts';
 import { fetchMenProducts } from '../../redux/slices/getMenProducts';
 import { fetchwoMenProducts } from '../../redux/slices/getWomenProducts';
 import { fetchThingsProducts } from '../../redux/slices/getThings';
+import Loading from '../../components/Loading';
 const itemsPerPage = 8; // Number of items per page
 
 export default function AllProducts() {
@@ -69,7 +70,7 @@ export default function AllProducts() {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div><Loading /></div>;
     }
 
     const { totalPages, products } = handleProducts();

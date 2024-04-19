@@ -1,0 +1,13 @@
+.img_lo {
+  width: 250px;
+  animation: loading 3s infinite;
+  transition: 0.3s;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

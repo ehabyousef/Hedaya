@@ -3,9 +3,9 @@ import style from './page.module.css';
 import { CiTrash } from 'react-icons/ci';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDelWhishlist } from '../../redux/slices/whishlistSlice';
 import { removeFromWishlist } from '../../redux/slices/wishlistSlices';
 import { IoIosRepeat } from 'react-icons/io';
+import Loading from '../../components/Loading';
 
 export default function Wishlist() {
     const [value, setValue] = useState({}); // State to store quantity of each product
@@ -24,22 +24,8 @@ export default function Wishlist() {
         setValue(initialValue);
     }, [products]);
 
-    const increase = (productId) => {
-        setValue(prevState => ({
-            ...prevState,
-            [productId]: prevState[productId] + 1,
-        }));
-    };
-
-    const decrease = (productId) => {
-        setValue(prevState => ({
-            ...prevState,
-            [productId]: Math.max(1, prevState[productId] - 1),
-        }));
-    };
-
     if (loading) {
-        return <div>Loading...</div>;
+        return <div><Loading /></div>;
     }
 
     return (
