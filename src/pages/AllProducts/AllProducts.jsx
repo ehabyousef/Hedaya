@@ -84,16 +84,16 @@ export default function AllProducts() {
                     </p>
                     <div className="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                         <p className="m-0 fs-5">Filter</p>
-                        <select className="form-select" aria-label="Default select example" id={style.select} onChange={handleFilterChange} value={filterOption}>
+                        <select className="form-select p-2" aria-label="Default select example" id={style.select} onChange={handleFilterChange} value={filterOption}>
                             <option value="all">All</option>
                             <option value="1">Men</option>
                             <option value="2">Women</option>
-                            <option value="3">Things</option>
+                            <option value="3">requirements</option>
                         </select>
                     </div>
                     <div className="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                         <p className="m-0 fs-5">Sort</p>
-                        <select className="form-select" aria-label="Default select example" id={style.select} onChange={handleSelectChange}>
+                        <select className="form-select p-2" aria-label="Default select example" id={style.select} onChange={handleSelectChange}>
                             <option selected value={' '}>Default</option>
                             <option value={'-finalPrice'}>price low to high</option>
                             <option value={'finalPrice'}>price high to low</option>
