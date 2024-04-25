@@ -101,3 +101,38 @@
   color: var(--brown);
   font-weight: bold;
 }
+.mini_cart {
+  position: absolute !important;
+  width: 400px;
+  
+  z-index: 100000;
+  right: 0;
+  background: var(--brown);
+  color: white;
+  padding: 1rem;
+  box-shadow: 3px 8px 16px var(--black);
+  display: none;
+}
+#cart_link:hover .mini_cart {
+  display: flex;
+}
+.toCart {
+  color: var(--white_color) !important;
+  font-size: 1.5rem;
+  text-decoration: none;
+  position: relative;
+  background: var(--blue);
+  width: fit-content;
+  margin: 0 auto;
+  transition: 0.3s;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+}
+.toCart:hover {
+  background-color: var(--beige);
+  color: var(--black) !important;
+}
+.toCart::before {
+  width: 0 !important;
+  height: 0 !important;
+}

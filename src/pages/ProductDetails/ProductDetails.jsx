@@ -13,8 +13,14 @@ import { Mousewheel, Pagination } from 'swiper/modules';
 import { motion } from "framer-motion"
 import ProductCard from '../../components/ProductCard';
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../../redux/slices/CartClice';
+import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlices';
 export default function ProductDetails() {
     let { id } = useParams();
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.Cart);
+    const whishlist = useSelector((state) => state.whish);
     const [item, setItem] = useState(null);
     const [Products, setProducts] = useState([])
     const [image, setimage] = useState("one");
@@ -54,6 +60,10 @@ export default function ProductDetails() {
         getProduct();
         handleSubProducts();
     }, [id, item]);
+
+    const isInCart = item?.id && cart.some(x => x.id === item.id);
+    const isInWishlist = item?.id && whishlist.some(x => x.id === item.id);
+
     if (!item) {
         return <div>Loading...</div>;
     }
@@ -115,24 +125,44 @@ export default function ProductDetails() {
                         </span>
                     </div>
                     <div className="d-flex gap-3">
-                        <div className='d-flex align-items-center px-3 py-2 gap-3' style={{ cursor: 'pointer', border: "1px solid var(--blue)" }}>
+                        <div
+                            onClick={() => {
+                                if (isInCart) {
+                                    dispatch(removeFromCart(item));
+                                } else {
+                                    dispatch(addToCart(item));
+                                }
+                            }}
+                            className='d-flex align-items-center px-3 py-2 gap-3' style={{ cursor: 'pointer', border: "1px solid var(--blue)" }}>
                             <MdOutlineAddShoppingCart size={20} />
-                            <div
-                                className=" "
-                                style={{ color: "var(--black)" }}
-                            >
-                                Add to cart
-                            </div>
+                            {isInCart ?
+                                <div
+                                    className=" "
+                                    style={{ color: "var(--red_color)" }}
+                                >
+                                    remove from cart
+                                </div>
+                                :
+                                <div
+                                    className=" "
+                                    style={{ color: "var(--black)" }}
+                                >
+                                    Add to cart
+                                </div>
+                            }
+
                         </div>
                         <div className='d-flex align-items-center px-3 py-2 gap-3' style={{ cursor: 'pointer', border: "1px solid var(--blue)" }}>
-                            <span>
-                                <FaRegHeart />
-                            </span>
-                            <span
-                                className=" "
-                            >
-                                Add to Wishlist
-                            </span>
+                            {isInWishlist ?
+                                <div className="d-flex align-items-center gap-3" style={{ cursor: "pointer" }} onClick={() => dispatch(removeFromWishlist(item))}>
+                                    <FaRegHeart size={20} color='red' />
+                                    <h6 className="m-0 p-0">Remove from wishlist</h6>
+                                </div>
+                                : <div className="d-flex align-items-center gap-3" style={{ cursor: "pointer" }} onClick={() => dispatch(addToWishlist(item))}>
+                                    <FaRegHeart size={20} color='black' />
+                                    <h6 className="m-0 p-0">Add to wishlist</h6>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="border-top p-2">

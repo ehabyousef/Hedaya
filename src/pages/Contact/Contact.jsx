@@ -71,8 +71,8 @@ export default function Contact() {
                             <p className="m-0 text-white">Write To US</p>
                         </div>
                         <p>Fill out our form and we will contact you within 24 hours.</p>
-                        <p>Emails: teem-ala-allah@gmail.com</p>
-                        <p>Emails: teem-ala-allah2@gmail.com</p>
+                        <p>Emails:ehabyousef022@gmail.com</p>
+                        <p>Emails:ehabyousef022@gmail.com</p>
                     </div>
                 </div>
                 <div

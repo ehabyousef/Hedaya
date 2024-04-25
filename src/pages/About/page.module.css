@@ -22,13 +22,13 @@
   background-repeat: no-repeat;
 }
 .card_info_1 {
-  background-image: url("../../images/bob.jpeg");
+  background-image: url("../../images/ui.jpeg");
 }
 .card_info_2 {
   background-image: url("../../images/mar.jpeg");
 }
 .card_info_3 {
-  background-image: url("../../images/ui.jpeg");
+  background-image: url("../../images/bob.jpeg");
 }
 .content {
   width: 100%;

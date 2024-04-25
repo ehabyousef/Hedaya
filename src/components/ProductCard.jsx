@@ -15,7 +15,6 @@ export default function ProductCard({ allPRoduct, ProdImage, name, descripe, pri
     const whishlist = useSelector((state) => state.whish);
     const dispatch = useDispatch(); // Get the dispatch function
     // const wishlistProducts = useSelector((state) => state.wishlist.products);
-    console.log(whishlist);
     const isInCart = cart.some(item => item.id === prodId);
     const isInWishlist = whishlist.some(item => item.id === prodId);
     // const addToWishlist = () => {
@@ -46,7 +45,7 @@ export default function ProductCard({ allPRoduct, ProdImage, name, descripe, pri
                 <span className="fs-4">
                     {price}<span className="mx-2 fs-5" style={{ color: 'var(--brown)', textDecoration: 'line-through' }}>{oldprice}</span>
                 </span>
-                <div className="d-flex align-items-center justify-content-center gap-3" id={css.view}>  
+                <div className="d-flex align-items-center justify-content-center gap-3" id={css.view}>
                     <div onClick={() => {
                         if (isInCart) {
                             dispatch(removeFromCart(allPRoduct));
@@ -56,7 +55,7 @@ export default function ProductCard({ allPRoduct, ProdImage, name, descripe, pri
                     }} className="d-flex align-items-center gap-3" style={{ cursor: "pointer" }}>
                         <MdOutlineAddShoppingCart size={20} />
                         {isInCart ?
-                            <h6 className="m-0 p-0">Remove From cart</h6>
+                            <h6 className="m-0 p-0 text-danger">Remove From cart</h6>
                             : <h6 className="m-0 p-0">add to cart</h6>
                         }
                     </div>

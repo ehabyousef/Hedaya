@@ -18,7 +18,6 @@ export default function NewArrival() {
         setactiveBtn('all')
         axios.get("https://backend-kappa-beige.vercel.app/product?category=660dafb95737493603ed9ef8")
             .then((res) => {
-                console.log(res.data.result);
                 setProducts(res.data.result)
             }).catch((err) => {
                 console.log(err);
@@ -30,7 +29,6 @@ export default function NewArrival() {
             .get('https://backend-kappa-beige.vercel.app/product?subCategory=660dce5572576adbe362b2c6')
             .then((res) => {
                 setProducts(res.data.result);
-                console.log(res.data.result);
             })
             .catch((err) => {
                 console.log(err);
@@ -42,7 +40,6 @@ export default function NewArrival() {
             .get('https://backend-kappa-beige.vercel.app/product?subCategory=660db0425737493603ed9efd')
             .then((res) => {
                 setProducts(res.data.result);
-                console.log(res.data.result);
             })
             .catch((err) => {
                 console.log(err);

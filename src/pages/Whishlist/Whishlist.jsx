@@ -14,7 +14,7 @@ export default function Wishlist() {
     const { products, loading } = useSelector((state) => state.wishlist);
 
     const whishlistProd = useSelector((state) => state.whish)
-    console.log(whishlistProd);
+
     useEffect(() => {
         // Initialize the value state with default quantity 1 for each product
         const initialValue = {};

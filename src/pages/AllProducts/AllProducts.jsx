@@ -95,10 +95,10 @@ export default function AllProducts() {
                         <p className="m-0 fs-5">Sort</p>
                         <select className="form-select" aria-label="Default select example" id={style.select} onChange={handleSelectChange}>
                             <option selected value={' '}>Default</option>
-                            <option value={'-finalPrice'}>price -</option>
-                            <option value={'finalPrice'}>Price +</option>
-                            <option value={'-availableItems'}>availableItems -</option>
-                            <option value={'availableItems'}>availableItems +</option>
+                            <option value={'-finalPrice'}>price low to high</option>
+                            <option value={'finalPrice'}>price high to low</option>
+                            <option value={'-availableItems'}>availableItems low to high</option>
+                            <option value={'availableItems'}>availableItems high to low</option>
                         </select>
                     </div>
                     <div className={style.input_wrapper}>

@@ -140,8 +140,8 @@ export default function Home() {
             <NewArrival />
             {/* start section  */}
             <br />
-            <div className="row my-5">
-                <div className="col">
+            <div className="row my-5 row-gap-3">
+                <div className="col-12 col-md">
                     <div className={style.content}>
                         <img src={men} alt="hi" className={style.img} />
                         <div className={style.body}>
@@ -153,7 +153,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col">
+                <div className="col-12 col-md">
                     <div className={style.content}>
                         <img src={women} alt="hi" className={style.img} />
                         <div className={style.body}>
@@ -165,7 +165,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col">
+                <div className="col-12 col-md">
                     <div className={style.content}>
                         <img src={soak} alt="hi" className={style.img} />
                         <div className={style.body}>
