@@ -11,28 +11,18 @@ import { addToWishlist, removeFromWishlist } from "../redux/slices/wishlistSlice
 export default function ProductCard({ allPRoduct, ProdImage, name, descripe, price, oldprice, prodId, secondImage }) {
     const navigate = useNavigate();
     const [hoverd, sethoverd] = useState(false);
-    const cart = useSelector((state) => state.Cart);
-    const whishlist = useSelector((state) => state.whish);
-    const dispatch = useDispatch(); // Get the dispatch function
-    // const wishlistProducts = useSelector((state) => state.wishlist.products);
-    const isInCart = cart.some(item => item.id === prodId);
-    const isInWishlist = whishlist.some(item => item.id === prodId);
-    // const addToWishlist = () => {
-    //     dispatch(fetchWhishlist({ itemID: prodId }));
-    //     setIsInWishlist(!isInWishlist);
-    // };
+    const cart = useSelector((state) => state.Cart || []);
+    const whishlist = useSelector((state) => state.whish || []);
+    const dispatch = useDispatch();
 
-    // const DelFromWishlist = () => {
-    //     dispatch(fetchDelWhishlist({ itemID: prodId }));
-    //     setIsInWishlist(!isInWishlist);
-    // };
+    const validCart = cart.filter(item => item !== null);
+    const validWhishlist = whishlist.filter(item => item !== null);
 
-    // Update isInWishlist when wishlistProducts changes
-    // useEffect(() => {
-    //     const isInWishlist = wishlistProducts.some(item => item.id === prodId);
-    //     setIsInWishlist(isInWishlist);
-    // }, [wishlistProducts, prodId]);
+    const isInCart = validCart.some(item => item._id === prodId);
+    const isInWishlist = validWhishlist.some(item => item._id === prodId);
 
+    console.log(cart);
+    console.log(validCart);
     return (
         <div className={css.content}>
             {hoverd

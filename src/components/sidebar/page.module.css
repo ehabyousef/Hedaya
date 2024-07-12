@@ -1,0 +1,57 @@
+.main_div {
+  position: sticky;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: fit-content;
+  background: var(--brown);
+  box-shadow: 4px 0px 26px 0px rgba(0, 0, 0, 0.08);
+  padding: 3rem 0.7rem;
+}
+.logo {
+  font-size: 35px;
+  font-weight: 400;
+  line-height: 54px;
+  letter-spacing: -0.04em;
+  color: var(--white_color);
+  text-shadow: 0px 8px 7px #00000036;
+  text-align: center;
+  display: block;
+}
+.divider {
+  width: 50%;
+  display: block;
+  margin: 1.5rem auto;
+  height: 2px;
+  background-color: white;
+}
+.active {
+  color: white;
+  position: relative;
+  transition: 0.3s;
+}
+.active::after {
+  content: "";
+  position: absolute;
+  right: 1%;
+  top: 2px;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.title_div {
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 10px 16px;
+  color: var(--white_color);
+  border-radius: 8px;
+}
+.title_div:hover {
+  background-color: var(--white_color);
+  color: var(--black);
+}
+.active:hover::after {
+  background-color: white;
+}

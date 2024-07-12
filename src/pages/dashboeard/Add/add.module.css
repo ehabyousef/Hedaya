@@ -1,0 +1,55 @@
+.custum_file_upload {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #e8e8e8;
+  background-color: var(--yellow_color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 2px 4px 7px 0px #b9c0ba;
+  position: relative;
+}
+
+.custum_file_upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum_file_upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.custum_file_upload .text span {
+  font-weight: 400;
+  color: var(--text_black);
+}
+
+.custum_file_upload input {
+  display: none;
+}
+.display_image {
+  width: 300xp;
+  height: 150px;
+}
+#select {
+  background-color: transparent !important;
+  border: 1px solid var(--black) !important;
+  color: var(--black);
+}
+#select option {
+  background-color: transparent !important;
+}
+#select:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}

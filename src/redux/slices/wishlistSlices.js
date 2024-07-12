@@ -5,7 +5,7 @@ const loadWishlistFromLocalStorage = () => {
     try {
         const wishlist = localStorage.getItem("wishlist");
         if (wishlist) {
-            return JSON.parse(wishlist);
+            return JSON.parse(wishlist).filter(item => item !== null);
         }
     } catch (error) {
         console.error("Error loading wishlist from local storage:", error);
@@ -26,48 +26,50 @@ const wishlistSlices = createSlice({
     initialState: loadWishlistFromLocalStorage(),
     reducers: {
         addToWishlist: (state, action) => {
-            state.push(action.payload);
-            saveWishlistToLocalStorage(state);
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Item Added To Wishlist"
-            })
+            if (action.payload) {
+                state.push(action.payload);
+                saveWishlistToLocalStorage(state);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Item Added To Wishlist"
+                });
+            }
         },
         removeFromWishlist: (state, action) => {
-            const index = state.findIndex((product) => product.id === action.payload.id);
+            const index = state.findIndex((product) => product?.id === action.payload.id);
             if (index !== -1) {
                 state.splice(index, 1);
                 saveWishlistToLocalStorage(state);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "warning",
+                    title: "Item Removed From Wishlist"
+                });
             }
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "warning",
-                title: "Item Removed From Wishlist"
-            })
         },
         clearWishlist: (state) => {
-            state = [];
+            state.length = 0; // Use length = 0 to clear the array
             saveWishlistToLocalStorage(state);
         },
     },

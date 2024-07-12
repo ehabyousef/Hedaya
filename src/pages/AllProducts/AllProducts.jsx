@@ -80,7 +80,7 @@ export default function AllProducts() {
             <div className="row my-3">
                 <div className="d-flex flex-column flex-md-row w-100 justify-content-between align-items-center row-gap-3">
                     <p>
-                        Showing <span className="fw-bold">{itemsPerPage}</span> of <span className="fw-bold">{products.length}</span> Products
+                        Showing <span className="fw-bold">{products.length}</span> of <span className="fw-bold">{allProducts.length}</span> Products
                     </p>
                     <div className="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
                         <p className="m-0 fs-5">Filter</p>

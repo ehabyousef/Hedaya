@@ -5,6 +5,7 @@ import style from './page.module.css';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { setValueTrue } from '../../redux/slices/TureOr';
+import { jwtDecode } from "jwt-decode";
 export default function Login() {
     const navigate = useNavigate();
     const [isLoading, setisLoading] = useState(false);
@@ -19,42 +20,67 @@ export default function Login() {
         setuserDetails(myuser);
         console.log(myuser);
     };
-    function submitLogin(e) {
+    const submitLogin = (e) => {
         e.preventDefault();
         setisLoading(true);
         axios
             .post("https://backend-kappa-beige.vercel.app/auth/login", userDetails)
             .then((response) => {
                 console.log(response.data);
-                localStorage.setItem("userToken", response.data.result);
+                const token = response.data.result;
+                localStorage.setItem("userToken", token);
                 setisLoading(false);
+                const decoded = jwtDecode(token);
+
+                console.log(decoded);
+
                 if (response.data.success) {
-                    dispatch(setValueTrue())
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Signed in successfully going to home"
-                    }).then(() => {
-                        navigate("/home");
-                    });
+                    dispatch(setValueTrue());
+                    if (decoded.role === 'admin') {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Signed in successfully, redirecting to dashboard"
+                        }).then(() => {
+                            navigate("/dashboard");
+                        });
+                    } else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Signed in successfully, redirecting to home"
+                        }).then(() => {
+                            navigate("/home");
+                        });
+                    }
+
                 }
             })
             .catch((error) => {
-                console.log(error.data);
+                console.log(error.response.data);
                 setisLoading(false);
             });
-
-    }
+    };
     return (
         <div className="d-flex align-items-center p-3 h-100" style={{ background: "#D9B282" }}>
             <div className="container mb-5 my-md-5">

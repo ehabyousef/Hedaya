@@ -13,7 +13,8 @@ export default function Wishlist() {
     const dispatch = useDispatch();
     const { products, loading } = useSelector((state) => state.wishlist);
 
-    const whishlistProd = useSelector((state) => state.whish)
+    const whishlistProd = useSelector((state) => state.whish.filter(product => product !== null)); // Filter out null products
+    console.log(whishlistProd);
 
     useEffect(() => {
         // Initialize the value state with default quantity 1 for each product

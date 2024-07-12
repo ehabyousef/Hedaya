@@ -7,6 +7,7 @@ import About from './pages/About/About';
 import Whishlist from './pages/Whishlist/Whishlist';
 import Cart from './pages/Cart/Cart';
 import Loading from './components/Loading';
+import Dashboard from './pages/dashboeard/Dashboard';
 const Navbar = lazy(() => import("./components/Navbar"))
 const Home = lazy(() => import("./pages/Home/Home"))
 const Auth = lazy(() => import("./pages/Auth/Auth"))
@@ -66,6 +67,7 @@ function App() {
             <Route path='contact' element={<Contact />} />
             <Route path='about' element={<About />} />
             <Route path='favourite' element={<Whishlist />} />
+            <Route path='dashboard/*' element={<Dashboard showNav={setnavappear} showFooter={setfooterappear} />} />
             <Route path='cart' element={<Cart />} />
             <Route path='*' element={<NotFound />} />
           </Routes>

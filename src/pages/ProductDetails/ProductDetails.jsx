@@ -19,13 +19,18 @@ import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSl
 export default function ProductDetails() {
     let { id } = useParams();
     const dispatch = useDispatch();
-    const cart = useSelector((state) => state.Cart);
-    const whishlist = useSelector((state) => state.whish);
     const [item, setItem] = useState(null);
     const [Products, setProducts] = useState([])
     const [image, setimage] = useState("one");
     const [value, setvalue] = useState(1);
     const [appear, setappear] = useState(false)
+    const cart = useSelector((state) => state.Cart);
+    const whishlist = useSelector((state) => state.whish);
+    const validCart = cart.filter(item => item !== null);
+    const validWishlist = whishlist.filter(item => item !== null);
+
+    const isInCart = item?.id && validCart.some(x => x.id === item.id);
+    const isInWishlist = item?.id && validWishlist.some(x => x.id === item.id);
     const increse = () => {
         setvalue(value + 1);
     };
@@ -60,10 +65,6 @@ export default function ProductDetails() {
         getProduct();
         handleSubProducts();
     }, [id, item]);
-
-    const isInCart = item?.id && cart.some(x => x.id === item.id);
-    const isInWishlist = item?.id && whishlist.some(x => x.id === item.id);
-
     if (!item) {
         return <div>Loading...</div>;
     }

@@ -99,10 +99,10 @@ export default function Navbar() {
                                             cart.map(product => (
                                                 <div className="d-flex border-bottom my-2 py-3">
                                                     <div className="col-6 d-flex align-items-start flex-column ">
-                                                        <div style={{ color: 'var(--red_color)' }}>
+                                                        <div >
                                                             <p>{product.name}</p>
                                                         </div>
-                                                        <div>{product.finalPrice} $</div>
+                                                        <div style={{ color: 'var(--red_color)' }}>{product.finalPrice} $</div>
                                                     </div>
                                                     <div className="col-6 d-flex justify-content-end align-items-center gap-3 flex-row">
                                                         <img src={product.defaultImage.url} alt="img" width={60} height={60} />
