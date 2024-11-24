@@ -8,12 +8,7 @@ import { motion } from "framer-motion";
 
 // import required modules
 import { Pagination } from "swiper/modules";
-import ProductCard from "../../components/ProductCard";
 import {
-    FaCcApplePay,
-    FaCcMastercard,
-    FaCcPaypal,
-    FaCcVisa,
     FaFacebook,
     FaInstagram,
     FaLinkedinIn,
@@ -56,7 +51,7 @@ export default function About() {
             <hr />
             <br />
             <div className="row">
-                <h2 className="text-center fw-bold text-capitalize my-4">
+                <h2 className="text-center fw-bold text-capitalize my-4 ">
                     meet our team
                 </h2>
                 <Swiper
@@ -65,7 +60,7 @@ export default function About() {
                     breakpoints={{
                         330: {
                             slidesPerView: 1,
-                            spaceBetween: 0,
+                            spaceBetween: 2,
                         },
                         640: {
                             slidesPerView: 2,
@@ -83,8 +78,7 @@ export default function About() {
                     grabCursor={true}
                     loop={true}
                     modules={[Pagination]}
-                    className={style.swiper}
-                    style={{ margin: "1rem" }}
+                    className={`${style.swiper} m-0 m-lg-5`}
                 >
                     <SwiperSlide className={style.swiper_slide}>
                         <div className={style.card_info_1}>

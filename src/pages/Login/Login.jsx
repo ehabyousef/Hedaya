@@ -31,9 +31,7 @@ export default function Login() {
                 localStorage.setItem("userToken", token);
                 setisLoading(false);
                 const decoded = jwtDecode(token);
-
                 console.log(decoded);
-
                 if (response.data.success) {
                     dispatch(setValueTrue());
                     if (decoded.role === 'admin') {

@@ -12,7 +12,6 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import style from './page.module.css';
 import { motion } from "framer-motion"
-import ProductCard from '../../components/ProductCard';
 import NewArrival from '../../components/NewArrival';
 import soak from "../../images/soak.jpg";
 import women from "../../images/women.jpg";
