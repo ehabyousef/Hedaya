@@ -1,0 +1,19 @@
+galabia  :  660db0425737493603ed9efd
+
+hijab : 660dce5572576adbe362b2c6
+
+things : 661020599e25e92a647b7672
+
+category-islamic : 660dafb95737493603ed9ef8
+
+
+
+{
+    "userName":"Bob",
+    "email":"merav95188@em2lab.com",
+    "role":"admin",
+    "password":"662002",
+    "confirmPassword":"662002"
+}
+
+
