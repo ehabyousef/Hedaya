@@ -14,7 +14,7 @@ export default function Contact() {
         let user = { ...userMessage };
         user[e.target.name] = e.target.value;
         setuserMessage(user);
-        console.log(userMessage);
+        
     };
     const submitSend = (e) => {
         e.preventDefault();
@@ -22,12 +22,12 @@ export default function Contact() {
         axios
             .post("https://backend-kappa-beige.vercel.app/about", userMessage)
             .then((response) => {
-                console.log(response.data.message);
+                
                 setisLoading(false);
                 setMessage(response.data.message);
             })
             .catch((err) => {
-                console.log(err);
+                
                 setisLoading(false);
             });
     };

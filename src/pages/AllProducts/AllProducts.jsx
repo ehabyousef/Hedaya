@@ -66,7 +66,7 @@ export default function AllProducts() {
     }
     const handleSelectChange = (event) => {
         setsortValue(event.target.value); // Update sortValue state when select value changes
-        console.log(sortValue);
+        
     };
 
     if (loading) {

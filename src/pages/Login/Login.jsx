@@ -18,7 +18,7 @@ export default function Login() {
         let myuser = { ...userDetails };
         myuser[e.target.name] = e.target.value;
         setuserDetails(myuser);
-        console.log(myuser);
+        
     };
     const submitLogin = (e) => {
         e.preventDefault();
@@ -26,12 +26,12 @@ export default function Login() {
         axios
             .post("https://backend-kappa-beige.vercel.app/auth/login", userDetails)
             .then((response) => {
-                console.log(response.data);
+                
                 const token = response.data.result;
                 localStorage.setItem("userToken", token);
                 setisLoading(false);
                 const decoded = jwtDecode(token);
-                console.log(decoded);
+                
                 if (response.data.success) {
                     dispatch(setValueTrue());
                     if (decoded.role === 'admin') {
@@ -75,7 +75,7 @@ export default function Login() {
                 }
             })
             .catch((error) => {
-                console.log(error.response.data);
+                
                 setisLoading(false);
             });
     };

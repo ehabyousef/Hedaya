@@ -46,7 +46,7 @@ export default function ProductDetails() {
                     setItem(resp.data.result);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    
                 });
         };
 
@@ -57,7 +57,7 @@ export default function ProductDetails() {
 
                         setProducts(res.data.result);
                     }).catch((err) => {
-                        // console.log(err);
+                        // 
                     });
             }
         };

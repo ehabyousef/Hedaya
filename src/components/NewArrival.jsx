@@ -20,7 +20,7 @@ export default function NewArrival() {
             .then((res) => {
                 setProducts(res.data.result)
             }).catch((err) => {
-                console.log(err);
+                
             })
     };
     const handleWomenButtonClick = () => {
@@ -31,7 +31,7 @@ export default function NewArrival() {
                 setProducts(res.data.result);
             })
             .catch((err) => {
-                console.log(err);
+                
             });
     };
     const handleMenButtonClick = () => {
@@ -42,7 +42,7 @@ export default function NewArrival() {
                 setProducts(res.data.result);
             })
             .catch((err) => {
-                console.log(err);
+                
             });
     };
     useEffect(() => {

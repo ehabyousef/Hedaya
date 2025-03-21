@@ -20,9 +20,6 @@ export default function ProductCard({ allPRoduct, ProdImage, name, descripe, pri
 
     const isInCart = validCart.some(item => item._id === prodId);
     const isInWishlist = validWhishlist.some(item => item._id === prodId);
-
-    console.log(cart);
-    console.log(validCart);
     return (
         <div className={css.content}>
             {hoverd

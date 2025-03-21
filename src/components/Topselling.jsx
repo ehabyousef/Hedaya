@@ -32,10 +32,10 @@ export default function Topselling() {
             .get('https://backend-kappa-beige.vercel.app/product?subCategory=660dce5572576adbe362b2c6')
             .then((res) => {
                 setProducts(res.data.result);
-                console.log(res.data.result);
+
             })
             .catch((err) => {
-                console.log(err);
+
             });
     };
 

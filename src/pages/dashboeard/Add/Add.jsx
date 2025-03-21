@@ -24,7 +24,7 @@ export default function Add() {
             ...prev,
             [name]: value,
         }));
-        console.log(prod);
+        
     };
 
     const handleDefaultImageChange = (e) => {
@@ -42,7 +42,7 @@ export default function Add() {
             ...prev,
             subCategory: selectedValue,
         }));
-        console.log(prod);
+        
     };
 
     const userToken = localStorage.getItem("userToken");
@@ -71,9 +71,9 @@ export default function Add() {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                console.log(res.data);
+                
             }).catch((err) => {
-                console.log(err.response.data);
+                
             });
     };
 

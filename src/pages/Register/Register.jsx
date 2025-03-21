@@ -18,7 +18,7 @@ export default function Register() {
         let myuser = { ...userDetails };
         myuser[e.target.name] = e.target.value;
         setuserDetails(myuser);
-        console.log(myuser);
+        
     };
     function submitRegister(e) {
         e.preventDefault();
@@ -26,7 +26,7 @@ export default function Register() {
         axios
             .post("https://backend-kappa-beige.vercel.app/auth/register", userDetails)
             .then((response) => {
-                console.log(response.data);
+                
                 setisLoading(false);
                 const Toast = Swal.mixin({
                     toast: true,
@@ -45,7 +45,7 @@ export default function Register() {
                 });
             })
             .catch((error) => {
-                console.log(error.data);
+                
                 setisLoading(false);
             });
 
