@@ -112,7 +112,7 @@ export default function ProductCard({
         <img
           onMouseLeave={() => sethoverd(false)}
           src={secondImage}
-          alt="hi"
+          alt={name}
           className={css.img}
           onClick={() => navigate(`/productDetails/${prodId}`)}
         />
@@ -120,7 +120,7 @@ export default function ProductCard({
         <img
           onMouseEnter={() => sethoverd(true)}
           src={ProdImage}
-          alt="hi"
+          alt={name}
           className={css.img}
           onClick={() => navigate(`/productDetails/${prodId}`)}
         />
@@ -128,50 +128,45 @@ export default function ProductCard({
       <div className={css.body}>
         <h3>{name}</h3>
         <h5 className={css.decrip}>{descripe}</h5>
-        <span className="fs-4">
-          {price}
-          <span
-            className="mx-2 fs-5"
-            style={{ color: "var(--brown)", textDecoration: "line-through" }}
-          >
-            {oldprice}
-          </span>
-        </span>
+        <div className={css.price_section}>
+          <span className={css.current_price}>{price}$</span>
+          {oldprice && <span className={css.old_price}>{oldprice}$</span>}
+        </div>
         <div
-          className="d-flex align-items-center justify-content-center gap-3"
+          className="d-flex align-items-center justify-content-center gap-2"
           id={css.view}
         >
           <div
             onClick={handleCartAction}
-            className="d-flex align-items-center gap-3"
+            className="d-flex align-items-center gap-2"
             style={{ cursor: "pointer", opacity: cartLoading ? 0.6 : 1 }}
           >
-            <MdOutlineAddShoppingCart size={20} />
+            <MdOutlineAddShoppingCart size={16} />
             {cartLoading ? (
               <h6 className="m-0 p-0">Loading...</h6>
             ) : isInCart ? (
-              <h6 className="m-0 p-0 text-danger">Remove From cart</h6>
+              <h6 className="m-0 p-0 text-danger">Remove</h6>
             ) : (
-              <h6 className="m-0 p-0">add to cart</h6>
+              <h6 className="m-0 p-0">Add to cart</h6>
             )}
           </div>
           {isInWishlist ? (
             <div
-              className="d-flex align-items-center gap-3"
+              className="d-flex align-items-center gap-2"
               style={{ cursor: "pointer" }}
               onClick={() => dispatch(removeFromWishlist(allPRoduct))}
             >
-              <FaRegHeart size={20} color="red" />
-              <h6 className="m-0 p-0">Remove from wishlist</h6>
+              <FaRegHeart size={16} color="red" />
+              <h6 className="m-0 p-0">Remove</h6>
             </div>
           ) : (
             <div
-              className="d-flex align-items-center gap-3"
+              className="d-flex align-items-center gap-2"
               style={{ cursor: "pointer" }}
               onClick={() => dispatch(addToWishlist(allPRoduct))}
             >
-              <FaRegHeart size={20} color="black" />
-              <h6 className="m-0 p-0">Add to wishlist</h6>
+              <FaRegHeart size={16} color="black" />
+              <h6 className="m-0 p-0">Wishlist</h6>
             </div>
           )}
         </div>
