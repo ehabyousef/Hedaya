@@ -31,8 +31,8 @@ export const addToWishlist = createAsyncThunk(
     try {
       const token = localStorage.getItem("userToken");
       const response = await axios.post(
-        `${API_BASE_URL}/products/wishlist`,
-        { productId },
+        `${API_BASE_URL}/products/wishlist/${productId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,12 +72,14 @@ export const removeFromWishlist = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("userToken");
-      const response = await axios.delete(`${API_BASE_URL}/products/wishlist`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: { productId },
-      });
+      const response = await axios.delete(
+        `${API_BASE_URL}/products/wishlist/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Show success toast
       const Toast = Swal.mixin({

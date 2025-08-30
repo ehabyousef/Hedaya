@@ -3,8 +3,6 @@ import ProductSlice from "./slices/Products";
 import menProductSlice from "./slices/getMenProducts";
 import womenProductSlice from "./slices/getWomenProducts";
 import thingsProductSlice from "./slices/getThings";
-import whishlistSlice from "./slices/whishlistSlice";
-import getWhislis from "./slices/getWhislis";
 import cartSlice from "./slices/cartSlice";
 import wishlistSlice from "./slices/wishlistSlice";
 import TureOr from "./slices/TureOr";
@@ -17,8 +15,6 @@ export const store = configureStore({
     menProducts: menProductSlice,
     womenProducts: womenProductSlice,
     thingsProducts: thingsProductSlice,
-    addToFav: whishlistSlice,
-    wishlist: getWhislis,
     cart: cartSlice,
     whish: wishlistSlice,
     TureOr: TureOr,
