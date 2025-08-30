@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import css from "./productCart.module.css";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import {
-  fetchDelWhishlist,
-  fetchWhishlist,
-} from "../redux/slices/whishlistSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-  removeFromCart,
-  fetchCart,
-} from "../redux/slices/cartSlice.js";
+import { addToCart, removeFromCart } from "../redux/slices/cartSlice.js";
 import {
   addToWishlist,
   removeFromWishlist,
-} from "../redux/slices/wishlistSlices.js";
+} from "../redux/slices/wishlistSlice.js";
 import Swal from "sweetalert2";
 
 export default function ProductCard({
@@ -34,17 +26,21 @@ export default function ProductCard({
   const [cartLoading, setCartLoading] = useState(false);
 
   const cart = useSelector((state) => state.cart.data || []);
-  const whishlist = useSelector((state) => state.whish || []);
+  const whishlist = useSelector((state) => state.whish.items || []);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const validCart = cart?.filter((item) => item !== null);
-  const validWhishlist = whishlist.filter((item) => item !== null);
+  const validWhishlist = Array.isArray(whishlist)
+    ? whishlist.filter((item) => item !== null)
+    : [];
 
   const isInCart = validCart.some(
     (item) => item.product._id === prodId || item.product.id === prodId
   );
-  const isInWishlist = validWhishlist.some((item) => item._id === prodId);
+  const isInWishlist = validWhishlist.some(
+    (item) => item._id === prodId || item.id === prodId
+  );
 
   // Load cart data when component mounts if user is authenticated
   // NOTE: cart is fetched centrally (e.g. in App) to avoid multiple requests
@@ -106,6 +102,39 @@ export default function ProductCard({
       setCartLoading(false);
     }
   };
+
+  const handleWishlistAction = async () => {
+    if (!isAuthenticated) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Login",
+        text: "You need to login to add items to wishlist",
+        confirmButtonText: "Login",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/auth");
+        }
+      });
+      return;
+    }
+
+    try {
+      if (isInWishlist) {
+        await dispatch(
+          removeFromWishlist(allPRoduct._id || allPRoduct.id)
+        ).unwrap();
+      } else {
+        await dispatch(addToWishlist(allPRoduct._id || allPRoduct.id)).unwrap();
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || "Something went wrong",
+      });
+    }
+  };
   return (
     <div className={css.content}>
       {hoverd ? (
@@ -154,7 +183,7 @@ export default function ProductCard({
             <div
               className="d-flex align-items-center gap-2"
               style={{ cursor: "pointer" }}
-              onClick={() => dispatch(removeFromWishlist(allPRoduct))}
+              onClick={handleWishlistAction}
             >
               <FaRegHeart size={16} color="red" />
               <h6 className="m-0 p-0">Remove</h6>
@@ -163,7 +192,7 @@ export default function ProductCard({
             <div
               className="d-flex align-items-center gap-2"
               style={{ cursor: "pointer" }}
-              onClick={() => dispatch(addToWishlist(allPRoduct))}
+              onClick={handleWishlistAction}
             >
               <FaRegHeart size={16} color="black" />
               <h6 className="m-0 p-0">Wishlist</h6>

@@ -18,7 +18,7 @@ export const fetchAllProducts = createAsyncThunk(
 
 export const fetchFilteredProducts = createAsyncThunk(
   "allProducts/fetchFilteredProducts",
-  async ({ categoryId, subCategoryId }) => {
+  async ({ categoryId, subCategoryId, sort }) => {
     try {
       let url = `${base_url}/products/filter?`;
       const params = new URLSearchParams();
@@ -29,7 +29,10 @@ export const fetchFilteredProducts = createAsyncThunk(
       if (subCategoryId) {
         params.append("subCategoryId", subCategoryId);
       }
-      params.append("status", "new");
+      if (sort) {
+        params.append("sort", sort);
+      }
+      // params.append("status", "new");
       const res = await axios.get(`${url}${params.toString()}`);
       return res.data.data;
     } catch (err) {

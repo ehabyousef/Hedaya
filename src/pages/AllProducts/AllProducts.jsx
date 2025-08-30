@@ -27,8 +27,8 @@ export default function AllProducts() {
     // Fetch categories on component mount
     dispatch(fetchCategories());
     // Fetch all products initially
-    dispatch(fetchAllProducts(sortValue));
-  }, [dispatch, sortValue]);
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
   useEffect(() => {
     // Set loading to false when we have data
@@ -41,14 +41,15 @@ export default function AllProducts() {
     setCurrentPage(1); // Reset currentPage when filter changes
 
     // Handle filtering logic
-    if (filterOption === "all") {
-      dispatch(fetchAllProducts(sortValue));
+    if (filterOption === "all" && !sortValue) {
+      dispatch(fetchAllProducts());
     } else {
-      // Filter by category ID
+      // Filter by category ID or sort
       dispatch(
         fetchFilteredProducts({
-          categoryId: filterOption,
+          categoryId: filterOption === "all" ? null : filterOption,
           subCategoryId: null,
+          sort: sortValue,
         })
       );
     }
@@ -124,18 +125,14 @@ export default function AllProducts() {
               aria-label="Default select example"
               id={style.select}
               onChange={handleSelectChange}
+              value={sortValue}
             >
-              <option selected value={" "}>
-                Default
-              </option>
-              <option value={"-finalPrice"}>price low to high</option>
-              <option value={"finalPrice"}>price high to low</option>
-              <option value={"-availableItems"}>
-                availableItems low to high
-              </option>
-              <option value={"availableItems"}>
-                availableItems high to low
-              </option>
+              <option value="">Default (Newest First)</option>
+              <option value="price_asc">Price Low to High</option>
+              <option value="price_desc">Price High to Low</option>
+              <option value="name_asc">Name A to Z</option>
+              <option value="name_desc">Name Z to A</option>
+              <option value="oldest">Oldest First</option>
             </select>
           </div>
           <div className={style.input_wrapper}>

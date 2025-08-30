@@ -6,7 +6,7 @@ import thingsProductSlice from "./slices/getThings";
 import whishlistSlice from "./slices/whishlistSlice";
 import getWhislis from "./slices/getWhislis";
 import cartSlice from "./slices/cartSlice";
-import wishlistSlices from "./slices/wishlistSlices";
+import wishlistSlice from "./slices/wishlistSlice";
 import TureOr from "./slices/TureOr";
 import authSlice from "./slices/authSlice";
 import categoriesSlice from "./slices/categoriesSlice";
@@ -20,7 +20,7 @@ export const store = configureStore({
     addToFav: whishlistSlice,
     wishlist: getWhislis,
     cart: cartSlice,
-    whish: wishlistSlices,
+    whish: wishlistSlice,
     TureOr: TureOr,
     auth: authSlice,
     categories: categoriesSlice,

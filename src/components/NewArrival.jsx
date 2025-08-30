@@ -86,11 +86,15 @@ export default function NewArrival() {
             slidesPerView: 2,
             spaceBetween: 1,
           },
-          768: {
+          900: {
             slidesPerView: 3,
             spaceBetween: 1,
           },
           1024: {
+            slidesPerView: 3,
+            spaceBetween: 1,
+          },
+          1250: {
             slidesPerView: 4,
             spaceBetween: 1,
           },

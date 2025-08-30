@@ -12,6 +12,8 @@ import Whishlist from "./pages/Whishlist/Whishlist";
 const Navbar = lazy(() => import("./components/Navbar"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
+const ForgetPassword = lazy(() => import("./pages/Auth/ForgetPassword"));
+const ResetPassword = lazy(() => import("./pages/Auth/ResetPassword"));
 const ProductDetails = lazy(() =>
   import("./pages/ProductDetails/ProductDetails")
 );
@@ -64,6 +66,24 @@ function App() {
               path="/auth"
               element={
                 <Auth showNav={setNavVisible} showFooter={setFooterVisible} />
+              }
+            />
+            <Route
+              path="/auth/forget-password"
+              element={
+                <ForgetPassword
+                  showNav={setNavVisible}
+                  showFooter={setFooterVisible}
+                />
+              }
+            />
+            <Route
+              path="/auth/reset-password/:id/:token"
+              element={
+                <ResetPassword
+                  showNav={setNavVisible}
+                  showFooter={setFooterVisible}
+                />
               }
             />
             <Route path="/productDetails/:id" element={<ProductDetails />} />

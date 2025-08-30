@@ -6,22 +6,23 @@ import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleValue } from "../redux/slices/TureOr";
 import { removeFromCart, fetchCart } from "../redux/slices/cartSlice";
-import { clearWishlist } from "../redux/slices/wishlistSlices";
+import { clearWishlist, fetchWishlist } from "../redux/slices/wishlistSlice";
 import { CiTrash } from "react-icons/ci";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
   const cart = useSelector((state) => state.cart.data);
   const cartInfo = useSelector((state) => state.cart.cartInfo);
-  const whish = useSelector((state) => state.whish);
+  const whish = useSelector((state) => state.whish.items || []);
   const isValueTrue = useSelector((state) => state.TureOr.isValueTrue);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  // Fetch cart data when user is authenticated
+  // Fetch cart and wishlist data when user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCart());
+      dispatch(fetchWishlist());
     }
   }, [isAuthenticated, dispatch]);
 

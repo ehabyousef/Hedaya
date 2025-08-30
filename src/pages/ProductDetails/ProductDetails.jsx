@@ -18,7 +18,8 @@ import { addToCart, removeFromCart } from "../../redux/slices/cartSlice";
 import {
   addToWishlist,
   removeFromWishlist,
-} from "../../redux/slices/wishlistSlices";
+  fetchWishlist,
+} from "../../redux/slices/wishlistSlice";
 export default function ProductDetails() {
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -28,16 +29,36 @@ export default function ProductDetails() {
   const [value, setvalue] = useState(1);
   const [appear, setappear] = useState(false);
   const cart = useSelector((state) => state.cart.data || []);
-  const whishlist = useSelector((state) => state.whish);
+  const whishlist = useSelector((state) => state.whish.items || []);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const validCart = cart.filter((item) => item !== null);
-  const validWishlist = whishlist.filter((item) => item !== null);
+  const validWishlist = whishlist?.filter((item) => item !== null);
 
   const isInCart =
     item?.id &&
     validCart.some(
       (x) => x.product._id === item.id || x.product.id === item.id
     );
-  const isInWishlist = item?.id && validWishlist.some((x) => x.id === item.id);
+  const isInWishlist =
+    item?.id &&
+    validWishlist.some((x) => x._id === item.id || x.id === item.id);
+  const handleWishlistAction = async () => {
+    if (!isAuthenticated) {
+      // Handle non-authenticated user
+      return;
+    }
+
+    try {
+      if (isInWishlist) {
+        await dispatch(removeFromWishlist(item.id || item._id)).unwrap();
+      } else {
+        await dispatch(addToWishlist(item.id || item._id)).unwrap();
+      }
+    } catch (error) {
+      console.error("Error with wishlist action:", error);
+    }
+  };
+
   const increse = () => {
     setvalue(value + 1);
   };
@@ -73,6 +94,14 @@ export default function ProductDetails() {
     getProduct();
     handleSubProducts();
   }, [id, item]);
+
+  // Fetch wishlist when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchWishlist());
+    }
+  }, [isAuthenticated, dispatch]);
+
   if (!item) {
     return <div>Loading...</div>;
   }
@@ -190,7 +219,7 @@ export default function ProductDetails() {
                 <div
                   className="d-flex align-items-center gap-3"
                   style={{ cursor: "pointer" }}
-                  onClick={() => dispatch(removeFromWishlist(item))}
+                  onClick={handleWishlistAction}
                 >
                   <FaRegHeart size={20} color="red" />
                   <h6 className="m-0 p-0">Remove from wishlist</h6>
@@ -199,7 +228,7 @@ export default function ProductDetails() {
                 <div
                   className="d-flex align-items-center gap-3"
                   style={{ cursor: "pointer" }}
-                  onClick={() => dispatch(addToWishlist(item))}
+                  onClick={handleWishlistAction}
                 >
                   <FaRegHeart size={20} color="black" />
                   <h6 className="m-0 p-0">Add to wishlist</h6>

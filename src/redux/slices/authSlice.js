@@ -75,6 +75,42 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Async thunk for forget password
+export const forgetPassword = createAsyncThunk(
+  "auth/forgetPassword",
+  async (emailData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/password/forget-password`,
+        emailData
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to send reset email"
+      );
+    }
+  }
+);
+
+// Async thunk for reset password
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async ({ id, token, password }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/password/reset-password/${id}/${token}`,
+        { password }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to reset password"
+      );
+    }
+  }
+);
+
 const initialState = {
   user: _userFromToken,
   token: _tokenValid ? _storedToken : null,
@@ -83,6 +119,8 @@ const initialState = {
   error: null,
   registerSuccess: false,
   loginSuccess: false,
+  forgetPasswordSuccess: false,
+  resetPasswordSuccess: false,
 };
 
 const authSlice = createSlice({
@@ -95,6 +133,8 @@ const authSlice = createSlice({
     clearSuccess: (state) => {
       state.registerSuccess = false;
       state.loginSuccess = false;
+      state.forgetPasswordSuccess = false;
+      state.resetPasswordSuccess = false;
     },
   },
   extraReducers: (builder) => {
@@ -135,6 +175,40 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.loginSuccess = false;
         state.isAuthenticated = false;
+      })
+
+      // Forget password cases
+      .addCase(forgetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.forgetPasswordSuccess = false;
+      })
+      .addCase(forgetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.forgetPasswordSuccess = true;
+        state.error = null;
+      })
+      .addCase(forgetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.forgetPasswordSuccess = false;
+      })
+
+      // Reset password cases
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.resetPasswordSuccess = false;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.resetPasswordSuccess = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.resetPasswordSuccess = false;
       });
   },
 });

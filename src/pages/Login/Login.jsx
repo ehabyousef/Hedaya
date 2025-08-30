@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import style from "./page.module.css";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -122,9 +122,18 @@ export default function Login() {
               <label className={style.label}>password</label>
             </div>
           </div>
-          <button className={style.submit} type="submit">
-            {isLoading ? <span className={style.loader}></span> : "Login"}
-          </button>
+          <div className="text-center d-flex w-100 justify-content-between align-items-center">
+            <button className={style.submit} type="submit">
+              {isLoading ? <span className={style.loader}></span> : "Login"}
+            </button>
+            <Link
+              to="/auth/forget-password"
+              className="text-decoration-none"
+              style={{ color: "var(--white_color)", fontSize: "14px" }}
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </form>
       </div>
     </div>
