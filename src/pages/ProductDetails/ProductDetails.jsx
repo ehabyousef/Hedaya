@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import style from "./page.module.css";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa6";
@@ -13,21 +12,39 @@ import { Mousewheel, Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
 import ProductCard from "../../components/ProductCard";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../redux/slices/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  fetchCart,
+} from "../../redux/slices/cartSlice";
 import {
   addToWishlist,
   removeFromWishlist,
   fetchWishlist,
 } from "../../redux/slices/wishlistSlice";
+import {
+  fetchProductById,
+  fetchRelatedProducts,
+} from "../../redux/slices/Products";
 export default function ProductDetails() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const [item, setItem] = useState(null);
-  const [Products, setProducts] = useState([]);
   const [image, setimage] = useState("one");
   const [value, setvalue] = useState(1);
   const [appear, setappear] = useState(false);
+
+  // Get product and related products from Redux
+  const item = useSelector((state) => state.allProducts.currentProduct);
+  const isLoading = useSelector(
+    (state) => state.allProducts.currentProductLoading
+  );
+  const Products = useSelector(
+    (state) => state.allProducts.relatedProducts || []
+  );
+
+  // Cart and wishlist state
   const cart = useSelector((state) => state.cart.data || []);
   const whishlist = useSelector((state) => state.whish.items || []);
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -42,6 +59,7 @@ export default function ProductDetails() {
   const isInWishlist =
     item?.id &&
     validWishlist.some((x) => x._id === item.id || x.id === item.id);
+
   const handleWishlistAction = async () => {
     if (!isAuthenticated) {
       // Handle non-authenticated user
@@ -51,49 +69,115 @@ export default function ProductDetails() {
     try {
       if (isInWishlist) {
         await dispatch(removeFromWishlist(item.id || item._id)).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: "Removed from Wishlist",
+          text: `${item.name} has been removed from your wishlist`,
+          showConfirmButton: false,
+          timer: 2000,
+          toast: true,
+          position: "top-end",
+        });
       } else {
         await dispatch(addToWishlist(item.id || item._id)).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: "Added to Wishlist",
+          text: `${item.name} has been added to your wishlist`,
+          showConfirmButton: false,
+          timer: 2000,
+          toast: true,
+          position: "top-end",
+        });
       }
+      // Refresh wishlist data to update navbar
+      await dispatch(fetchWishlist()).unwrap();
     } catch (error) {
       console.error("Error with wishlist action:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update wishlist. Please try again.",
+        showConfirmButton: true,
+      });
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      // Handle non-authenticated user
+      return;
+    }
+
+    try {
+      if (isInCart) {
+        // If already in cart, remove it
+        await dispatch(removeFromCart(item._id || item.id)).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: "Removed from Cart",
+          text: `${item.name} has been removed from your cart`,
+          showConfirmButton: false,
+          timer: 2000,
+          toast: true,
+          position: "top-end",
+        });
+      } else {
+        // Add to cart with selected quantity
+        await dispatch(
+          addToCart({
+            productId: item._id || item.id,
+            quantity: value,
+          })
+        ).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: "Added to Cart",
+          text: `${item.name} (x${value}) has been added to your cart`,
+          showConfirmButton: false,
+          timer: 2000,
+          toast: true,
+          position: "top-end",
+        });
+      }
+      // Refresh cart data to update navbar
+      await dispatch(fetchCart()).unwrap();
+    } catch (error) {
+      console.error("Error with cart action:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update cart. Please try again.",
+        showConfirmButton: true,
+      });
     }
   };
 
   const increse = () => {
-    setvalue(value + 1);
+    // Check if there's a stock limit
+    const maxStock = item?.availableItems || 99;
+    if (value < maxStock) {
+      setvalue(value + 1);
+    }
   };
+
   const decrese = () => {
-    setvalue((prevValue) => (prevValue >= 2 ? prevValue - 1 : 1));
+    setvalue((prevValue) => (prevValue > 1 ? prevValue - 1 : 1));
   };
 
+  // Fetch product details when id changes
   useEffect(() => {
-    const getProduct = () => {
-      axios
-        .get(`https://backend-kappa-beige.vercel.app/product/single/${id}`)
-        .then((resp) => {
-          setItem(resp.data.result);
-        })
-        .catch((err) => {});
-    };
+    if (id) {
+      dispatch(fetchProductById(id));
+    }
+  }, [id, dispatch]);
 
-    const handleSubProducts = () => {
-      if (item && item.subCategory) {
-        axios
-          .get(
-            `https://backend-kappa-beige.vercel.app/product?subCategory=${item.subCategory}`
-          )
-          .then((res) => {
-            setProducts(res.data.result);
-          })
-          .catch((err) => {
-            //
-          });
-      }
-    };
-
-    getProduct();
-    handleSubProducts();
-  }, [id, item]);
+  // Fetch related products when product changes and has a subCategory
+  useEffect(() => {
+    if (item?.subCategory) {
+      dispatch(fetchRelatedProducts(item.subCategory));
+    }
+  }, [item, dispatch]);
 
   // Fetch wishlist when user is authenticated
   useEffect(() => {
@@ -102,7 +186,7 @@ export default function ProductDetails() {
     }
   }, [isAuthenticated, dispatch]);
 
-  if (!item) {
+  if (isLoading || !item) {
     return <div>Loading...</div>;
   }
   return (
@@ -181,22 +265,15 @@ export default function ProductDetails() {
                 +
               </div>
             </span>
+            {item?.availableItems && (
+              <span className="text-muted fs-6">
+                ({item.availableItems} available)
+              </span>
+            )}
           </div>
           <div className="d-flex gap-3">
             <div
-              onClick={() => {
-                if (isInCart) {
-                  dispatch(removeFromCart(item._id || item.id));
-                } else {
-                  dispatch(
-                    addToCart({
-                      product: item._id || item.id,
-                      quantity: value,
-                      price: parseFloat(item.finalPrice),
-                    })
-                  );
-                }
-              }}
+              onClick={handleAddToCart}
               className="d-flex align-items-center px-3 py-2 gap-3"
               style={{ cursor: "pointer", border: "1px solid var(--blue)" }}
             >

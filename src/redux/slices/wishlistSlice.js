@@ -31,6 +31,7 @@ export const addToWishlist = createAsyncThunk(
       const token = localStorage.getItem("userToken");
       const response = await axios.post(
         `${API_BASE_URL}/products/wishlist/${productId}`,
+        null,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,8 +63,8 @@ export const removeFromWishlist = createAsyncThunk(
         }
       );
 
-  // Return response along with productId for optimistic updates
-  return { productId, ...(response?.data || {}) };
+      // Return response along with productId for optimistic updates
+      return { productId, ...(response?.data || {}) };
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to remove from wishlist"
@@ -131,6 +132,22 @@ const wishlistSlice = createSlice({
       .addCase(addToWishlist.pending, (state) => {
         // Do not block the whole page for mutations
         state.error = null;
+      })
+      .addCase(addToWishlist.fulfilled, (state, action) => {
+        // Optimistically add item to wishlist
+        const newItem = action.payload?.data || action.payload;
+        if (
+          newItem &&
+          !state.items.some(
+            (item) => item._id === newItem._id || item.id === newItem.id
+          )
+        ) {
+          state.items.push(newItem);
+        }
+        state.error = null;
+      })
+      .addCase(addToWishlist.rejected, (state, action) => {
+        state.error = action.payload;
       })
 
       // Remove from wishlist cases

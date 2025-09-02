@@ -16,6 +16,14 @@ export default function Cart() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  // Helper to safely get product id from various shapes
+  const getProductId = (item) =>
+    item?.product?._id ||
+    item?.product?.id ||
+    item?.productId ||
+    (typeof item?.product === "string" ? item.product : undefined) ||
+    item?._id;
+
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchCart());
@@ -23,14 +31,17 @@ export default function Cart() {
   }, [dispatch, isAuthenticated]);
 
   const handleRemoveFromCart = (productId) => {
+    if (!productId) return;
     dispatch(removeFromCart(productId));
   };
 
   const handleIncreaseQuantity = (productId, currentQuantity) => {
+    if (!productId) return;
     dispatch(updateCartQuantity({ productId, quantity: currentQuantity + 1 }));
   };
 
   const handleDecreaseQuantity = (productId, currentQuantity) => {
+    if (!productId) return;
     if (currentQuantity > 1) {
       dispatch(
         updateCartQuantity({ productId, quantity: currentQuantity - 1 })
@@ -90,61 +101,53 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cart.map((item, index) => (
-            <tr key={index}>
-              <td className={` ${style.body_table}`}>
-                <img
-                  src={item.product.defaultImage?.url}
-                  alt="img"
-                  width={100}
-                  height={100}
-                />
-              </td>
-              <td className={style.body_table}>{item.product.name}</td>
-              <td className={style.body_table}>{item.price}</td>
-              <td className={style.body_table}>
-                <span
-                  className="border border-black rounded-1 d-flex mx-auto"
-                  style={{ width: "fit-content" }}
-                >
-                  <div
-                    onClick={() =>
-                      handleDecreaseQuantity(
-                        item.product._id || item.product.id,
-                        item.quantity
-                      )
-                    }
-                    className="btn count"
+          {cart.map((item, index) => {
+            const pid = getProductId(item);
+            const product =
+              item.product && typeof item.product === "object"
+                ? item.product
+                : null;
+            const imgSrc = product?.defaultImage?.url || "/placeholder.jpg";
+            const name = product?.name || "Product";
+            return (
+              <tr key={pid || index}>
+                <td className={` ${style.body_table}`}>
+                  <img src={imgSrc} alt="img" width={100} height={100} />
+                </td>
+                <td className={style.body_table}>{name}</td>
+                <td className={style.body_table}>{item.price}</td>
+                <td className={style.body_table}>
+                  <span
+                    className="border border-black rounded-1 d-flex mx-auto"
+                    style={{ width: "fit-content" }}
                   >
-                    -
-                  </div>
-                  <p className="px-4 mx-0 my-2">{item.quantity}</p>
-                  <div
-                    onClick={() =>
-                      handleIncreaseQuantity(
-                        item.product._id || item.product.id,
-                        item.quantity
-                      )
-                    }
-                    className="btn count"
-                  >
-                    +
-                  </div>
-                </span>
-              </td>
-              <td className={style.body_table}>
-                {(item.quantity * item.price).toFixed(2)}
-              </td>
-              <td className={style.body_table}>
-                <CiTrash
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    handleRemoveFromCart(item.product._id || item.product.id)
-                  }
-                />
-              </td>
-            </tr>
-          ))}
+                    <div
+                      onClick={() => handleDecreaseQuantity(pid, item.quantity)}
+                      className="btn count"
+                    >
+                      -
+                    </div>
+                    <p className="px-4 mx-0 my-2">{item.quantity}</p>
+                    <div
+                      onClick={() => handleIncreaseQuantity(pid, item.quantity)}
+                      className="btn count"
+                    >
+                      +
+                    </div>
+                  </span>
+                </td>
+                <td className={style.body_table}>
+                  {(item.quantity * item.price).toFixed(2)}
+                </td>
+                <td className={style.body_table}>
+                  <CiTrash
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleRemoveFromCart(pid)}
+                  />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 

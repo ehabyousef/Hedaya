@@ -34,7 +34,7 @@ export default function Login() {
 
   useEffect(() => {
     if (loginSuccess && user) {
-      if (user.role === "admin") {
+      if (user.isAdmin) {
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

@@ -1,19 +1,20 @@
 import { Pagination, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ProductCard from "../../../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../components/Loading";
-import { fetchAllProducts } from "../../../redux/slices/Products";
+import {
+  deleteProduct,
+  fetchAllProducts,
+} from "../../../redux/slices/Products";
 import css from "../../../components/productCart.module.css";
 import { TbEdit } from "react-icons/tb";
 import { CiTrash } from "react-icons/ci";
-import axios from "axios";
 import Swal from "sweetalert2";
+import ProductCard from "../../../components/ProductCard";
 const itemsPerPage = 12;
 export default function DashProd() {
   const [loading, setLoading] = useState(true); // Track loading state
   const [currentPage, setCurrentPage] = useState(1);
-  const [hoverd, sethoverd] = useState(false);
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts.data);
   const totalPages = Math.ceil(allProducts.length / itemsPerPage);
@@ -23,28 +24,24 @@ export default function DashProd() {
     startIndex + itemsPerPage
   );
   const delteProd = (id) => {
-    axios
-      .delete(
-        `https://backend-kappa-beige.vercel.app/product/deleteProduct/${id}`
-      )
-      .then((res) => {
-        dispatch(fetchAllProducts());
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        });
-        Toast.fire({
-          icon: "warning",
-          title: "Item Deleted successfully",
-        });
+    dispatch(deleteProduct(id)).then(() => {
+      dispatch(fetchAllProducts());
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        },
       });
+      Toast.fire({
+        icon: "warning",
+        title: "Item Deleted successfully",
+      });
+    });
   };
   function handlePageChange(event, page) {
     setCurrentPage(page);
@@ -68,15 +65,26 @@ export default function DashProd() {
   return (
     <div className="container">
       <div className="row my-5 row-gap-5" style={{ minHeight: "650px" }}>
-        {visibleProducts.map((product, index) => (
+        {visibleProducts.map((x, index) => (
           <div
-            className="col-12 col-md-4 col-lg-2 d-flex justify-content-center"
+            className="col-12 col-md-4 col-xl-2 d-flex justify-content-center"
             key={index}
           >
-            <div style={{ width: "100%" }}>
+            <ProductCard
+              allPRoduct={x}
+              ProdImage={x.defaultImage?.url}
+              secondImage={
+                x.images && x.images[0] ? x.images[0].url : undefined
+              }
+              name={x.name}
+              descripe={x.description}
+              price={x.finalPrice}
+              oldprice={x.price}
+              prodId={x.id}
+            />
+            {/* <div style={{ width: "100%" }}>
               <div className={css.content}>
                 <img
-                  onMouseLeave={() => sethoverd(false)}
                   src={
                     product.images && product.images[0]
                       ? product.images[0].url
@@ -127,7 +135,7 @@ export default function DashProd() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

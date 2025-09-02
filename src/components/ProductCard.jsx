@@ -51,7 +51,6 @@ export default function ProductCard({
     const currentProductId = prodId || allPRoduct._id || allPRoduct.id;
     return wishlistProductId === currentProductId;
   });
-  console.log("🚀 ~ ProductCard ~ isInWishlist:", isInWishlist);
 
   // Load cart data when component mounts if user is authenticated
   // NOTE: cart is fetched centrally (e.g. in App) to avoid multiple requests

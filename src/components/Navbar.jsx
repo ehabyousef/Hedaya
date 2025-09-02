@@ -17,6 +17,14 @@ export default function Navbar() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  // Helper to safely get product id from various shapes
+  const getProductId = (item) =>
+    item?.product?._id ||
+    item?.product?.id ||
+    item?.productId ||
+    (typeof item?.product === "string" ? item.product : undefined) ||
+    item?._id;
+
   // Fetch cart and wishlist data when user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -26,6 +34,7 @@ export default function Navbar() {
   }, [isAuthenticated, dispatch]);
 
   const handleRemoveFromCart = (productId) => {
+    if (!productId) return;
     dispatch(removeFromCart(productId));
   };
 
@@ -134,41 +143,40 @@ export default function Navbar() {
                     }}
                   >
                     {cart && cart.length > 0 ? (
-                      cart.map((item, index) => (
-                        <div
-                          key={index}
-                          className="d-flex border-bottom my-2 py-3"
-                        >
-                          <div className="col-6 d-flex align-items-start flex-column ">
-                            <div>
-                              <p>{item.product?.name || "Product"}</p>
+                      cart.map((item, index) => {
+                        const pid = getProductId(item);
+                        const name = item.product?.name || "Product";
+                        const imgSrc =
+                          item.product?.defaultImage?.url || "/placeholder.jpg";
+                        return (
+                          <div
+                            key={pid || index}
+                            className="d-flex border-bottom my-2 py-3"
+                          >
+                            <div className="col-6 d-flex align-items-start flex-column ">
+                              <div>
+                                <p>{name}</p>
+                              </div>
+                              <div style={{ color: "var(--red_color)" }}>
+                                {item.price} $ x {item.quantity}
+                              </div>
                             </div>
-                            <div style={{ color: "var(--red_color)" }}>
-                              {item.price} $ x {item.quantity}
+                            <div className="col-6 d-flex justify-content-end align-items-center gap-3 flex-row">
+                              <img
+                                src={imgSrc}
+                                alt="img"
+                                width={60}
+                                height={60}
+                              />
+                              <CiTrash
+                                style={{ cursor: "pointer" }}
+                                onClick={() => handleRemoveFromCart(pid)}
+                                size={20}
+                              />
                             </div>
                           </div>
-                          <div className="col-6 d-flex justify-content-end align-items-center gap-3 flex-row">
-                            <img
-                              src={
-                                item.product?.defaultImage?.url ||
-                                "/placeholder.jpg"
-                              }
-                              alt="img"
-                              width={60}
-                              height={60}
-                            />
-                            <CiTrash
-                              style={{ cursor: "pointer" }}
-                              onClick={() => {
-                                handleRemoveFromCart(
-                                  item.product._id || item.product.id
-                                );
-                              }}
-                              size={20}
-                            />
-                          </div>
-                        </div>
-                      ))
+                        );
+                      })
                     ) : (
                       <p>no items in cart</p>
                     )}

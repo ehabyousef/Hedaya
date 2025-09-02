@@ -100,10 +100,16 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
       // Add
+      .addCase(addToCart.pending, (state) => {
+        state.error = null;
+      })
       .addCase(addToCart.fulfilled, (state, action) => {
         // Refresh cart after adding
         state.data = action.payload.data?.products || [];
         state.cartInfo = action.payload.data;
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.error = action.payload;
       })
       // Remove
       .addCase(removeFromCart.fulfilled, (state, action) => {
