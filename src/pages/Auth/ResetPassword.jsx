@@ -8,6 +8,7 @@ import {
   clearError,
   clearSuccess,
 } from "../../redux/slices/authSlice";
+import { FaEye } from "react-icons/fa6";
 
 export default function ResetPassword(props) {
   const dispatch = useDispatch();
@@ -211,9 +212,7 @@ export default function ResetPassword(props) {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <i
-                    className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
-                  ></i>
+                  <FaEye color="blcak" size={20} />
                 </button>
               </div>
               {formErrors.password && (
@@ -245,11 +244,7 @@ export default function ResetPassword(props) {
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  <i
-                    className={`fa ${
-                      showConfirmPassword ? "fa-eye-slash" : "fa-eye"
-                    }`}
-                  ></i>
+                  <FaEye color="blcak" size={20} />
                 </button>
               </div>
               {formErrors.confirmPassword && (
