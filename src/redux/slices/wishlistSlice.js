@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import Swal from "sweetalert2";
 
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -32,30 +31,12 @@ export const addToWishlist = createAsyncThunk(
       const token = localStorage.getItem("userToken");
       const response = await axios.post(
         `${API_BASE_URL}/products/wishlist/${productId}`,
-        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
-      // Show success toast
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Item Added To Wishlist",
-      });
 
       return response.data;
     } catch (error) {
@@ -81,24 +62,8 @@ export const removeFromWishlist = createAsyncThunk(
         }
       );
 
-      // Show success toast
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "warning",
-        title: "Item Removed From Wishlist",
-      });
-
-      return productId;
+  // Return response along with productId for optimistic updates
+  return { productId, ...(response?.data || {}) };
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to remove from wishlist"
@@ -133,7 +98,28 @@ const wishlistSlice = createSlice({
       })
       .addCase(fetchWishlist.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.items = action.payload.data || action.payload || [];
+        // Handle different API response structures
+        const responseData = action.payload;
+        if (responseData?.result && Array.isArray(responseData.result)) {
+          // API shape: { status, count, result: [{ product: {...} }, ...] }
+          state.items = responseData.result.map((it) => it.product || it);
+        } else if (Array.isArray(responseData)) {
+          state.items = responseData;
+        } else if (responseData?.data && Array.isArray(responseData.data)) {
+          state.items = responseData.data;
+        } else if (
+          responseData?.results &&
+          Array.isArray(responseData.results)
+        ) {
+          state.items = responseData.results;
+        } else if (
+          responseData?.data?.result &&
+          Array.isArray(responseData.data.result)
+        ) {
+          state.items = responseData.data.result.map((it) => it.product || it);
+        } else {
+          state.items = [];
+        }
         state.error = null;
       })
       .addCase(fetchWishlist.rejected, (state, action) => {
@@ -143,39 +129,30 @@ const wishlistSlice = createSlice({
 
       // Add to wishlist cases
       .addCase(addToWishlist.pending, (state) => {
-        state.isLoading = true;
+        // Do not block the whole page for mutations
         state.error = null;
-      })
-      .addCase(addToWishlist.fulfilled, (state, action) => {
-        state.isLoading = false;
-        // Add the new item to the wishlist if it's not already there
-        const newItem = action.payload.data || action.payload;
-        if (newItem && !state.items.find((item) => item._id === newItem._id)) {
-          state.items.push(newItem);
-        }
-        state.error = null;
-      })
-      .addCase(addToWishlist.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
       })
 
       // Remove from wishlist cases
       .addCase(removeFromWishlist.pending, (state) => {
-        state.isLoading = true;
+        // Do not block the whole page for mutations
         state.error = null;
       })
       .addCase(removeFromWishlist.fulfilled, (state, action) => {
-        state.isLoading = false;
-        // Remove the item from the wishlist
-        const productId = action.payload;
-        state.items = state.items.filter(
-          (item) => item._id !== productId && item.id !== productId
-        );
+        // Optimistically update items without forcing a full refetch
+        const removedId = action.payload?.productId;
+        if (removedId) {
+          state.items = (state.items || []).filter(
+            (it) =>
+              it._id !== removedId &&
+              it.id !== removedId &&
+              it.product?._id !== removedId &&
+              it.product?.id !== removedId
+          );
+        }
         state.error = null;
       })
       .addCase(removeFromWishlist.rejected, (state, action) => {
-        state.isLoading = false;
         state.error = action.payload;
       });
   },

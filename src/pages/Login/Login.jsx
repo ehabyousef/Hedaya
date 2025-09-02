@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import style from "./page.module.css";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { setValueTrue } from "../../redux/slices/TureOr";
 import {
   loginUser,
   clearError,
@@ -35,8 +34,6 @@ export default function Login() {
 
   useEffect(() => {
     if (loginSuccess && user) {
-      dispatch(setValueTrue());
-
       if (user.role === "admin") {
         const Toast = Swal.mixin({
           toast: true,

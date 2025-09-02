@@ -4,9 +4,9 @@ import style from "./Navbar.module.css";
 import logo from "../images/logo-no-background.png";
 import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleValue } from "../redux/slices/TureOr";
 import { removeFromCart, fetchCart } from "../redux/slices/cartSlice";
 import { clearWishlist, fetchWishlist } from "../redux/slices/wishlistSlice";
+import { logout } from "../redux/slices/authSlice";
 import { CiTrash } from "react-icons/ci";
 import { motion } from "framer-motion";
 
@@ -14,7 +14,6 @@ export default function Navbar() {
   const cart = useSelector((state) => state.cart.data);
   const cartInfo = useSelector((state) => state.cart.cartInfo);
   const whish = useSelector((state) => state.whish.items || []);
-  const isValueTrue = useSelector((state) => state.TureOr.isValueTrue);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -33,8 +32,7 @@ export default function Navbar() {
   const logOut = () => {
     // Clear local cart data on logout
     dispatch(clearWishlist());
-    localStorage.clear();
-    dispatch(toggleValue());
+    dispatch(logout());
   };
   function getTotalPrice() {
     // Use totalPrice from API if available, otherwise calculate manually
@@ -96,7 +94,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                {isValueTrue ? (
+                {isAuthenticated ? (
                   <Link className="nav-link" to="/auth" onClick={logOut}>
                     Log out
                   </Link>
@@ -110,7 +108,7 @@ export default function Navbar() {
                 <Link className="nav-link position-relative" to="/favourite">
                   favourite
                   <span className={style.cart_num}>
-                    {isValueTrue ? `${whish.length}` : 0}
+                    {isAuthenticated && Array.isArray(whish) ? whish.length : 0}
                   </span>
                 </Link>
               </li>

@@ -191,7 +191,7 @@ export default function AllProducts() {
                   descripe={product.description}
                   price={product.finalPrice}
                   oldprice={product.price}
-                  prodId={product.id}
+                  prodId={product._id || product.id}
                 />
               </div>
             </div>

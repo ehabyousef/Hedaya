@@ -4,10 +4,15 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../redux/slices/cartSlice.js";
+import {
+  addToCart,
+  removeFromCart,
+  fetchCart,
+} from "../redux/slices/cartSlice.js";
 import {
   addToWishlist,
   removeFromWishlist,
+  fetchWishlist,
 } from "../redux/slices/wishlistSlice.js";
 import Swal from "sweetalert2";
 
@@ -35,12 +40,18 @@ export default function ProductCard({
     ? whishlist.filter((item) => item !== null)
     : [];
 
-  const isInCart = validCart.some(
-    (item) => item.product._id === prodId || item.product.id === prodId
-  );
-  const isInWishlist = validWhishlist.some(
-    (item) => item._id === prodId || item.id === prodId
-  );
+  const isInCart = validCart.some((item) => {
+    const cartProductId = item.product._id || item.product.id;
+    const currentProductId = prodId || allPRoduct._id || allPRoduct.id;
+    return cartProductId === currentProductId;
+  });
+  const isInWishlist = validWhishlist?.some((item) => {
+    const wishlistProductId =
+      item._id || item.id || item.product?._id || item.product?.id;
+    const currentProductId = prodId || allPRoduct._id || allPRoduct.id;
+    return wishlistProductId === currentProductId;
+  });
+  console.log("🚀 ~ ProductCard ~ isInWishlist:", isInWishlist);
 
   // Load cart data when component mounts if user is authenticated
   // NOTE: cart is fetched centrally (e.g. in App) to avoid multiple requests
@@ -63,10 +74,11 @@ export default function ProductCard({
 
     setCartLoading(true);
     try {
+      const productId = prodId || allPRoduct._id || allPRoduct.id;
       if (isInCart) {
-        await dispatch(
-          removeFromCart(allPRoduct._id || allPRoduct.id)
-        ).unwrap();
+        await dispatch(removeFromCart(productId)).unwrap();
+        // Refresh cart to update UI immediately
+        await dispatch(fetchCart());
         Swal.fire({
           icon: "success",
           title: "Removed from cart",
@@ -78,11 +90,12 @@ export default function ProductCard({
       } else {
         await dispatch(
           addToCart({
-            productId: allPRoduct._id || allPRoduct.id,
+            productId: productId,
             quantity: 1,
-            price: parseFloat(price),
           })
         ).unwrap();
+        // Refresh cart to update UI immediately
+        await dispatch(fetchCart());
         Swal.fire({
           icon: "success",
           title: "Added to cart",
@@ -120,13 +133,29 @@ export default function ProductCard({
     }
 
     try {
+      const productId = prodId || allPRoduct._id || allPRoduct.id;
+
+      let res;
       if (isInWishlist) {
-        await dispatch(
-          removeFromWishlist(allPRoduct._id || allPRoduct.id)
-        ).unwrap();
+        res = await dispatch(removeFromWishlist(productId)).unwrap();
       } else {
-        await dispatch(addToWishlist(allPRoduct._id || allPRoduct.id)).unwrap();
+        res = await dispatch(addToWishlist(productId)).unwrap();
       }
+
+      // Optional toast with backend message if provided
+      if (res?.message) {
+        Swal.fire({
+          icon: "success",
+          title: res.message,
+          toast: true,
+          position: "top-end",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+
+      // Refresh wishlist to update UI immediately
+      await dispatch(fetchWishlist());
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -143,7 +172,11 @@ export default function ProductCard({
           src={secondImage}
           alt={name}
           className={css.img}
-          onClick={() => navigate(`/productDetails/${prodId}`)}
+          onClick={() =>
+            navigate(
+              `/productDetails/${prodId || allPRoduct._id || allPRoduct.id}`
+            )
+          }
         />
       ) : (
         <img
@@ -151,7 +184,11 @@ export default function ProductCard({
           src={ProdImage}
           alt={name}
           className={css.img}
-          onClick={() => navigate(`/productDetails/${prodId}`)}
+          onClick={() =>
+            navigate(
+              `/productDetails/${prodId || allPRoduct._id || allPRoduct.id}`
+            )
+          }
         />
       )}
       <div className={css.body}>

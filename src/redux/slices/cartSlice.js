@@ -46,7 +46,7 @@ export const removeFromCart = createAsyncThunk(
       const token = getToken();
       const res = await axios.delete(`${base_url}/cart/removeFromCart`, {
         headers: { Authorization: `Bearer ${token}` },
-        data: { productId: productId },
+        data: { productId },
       });
       return { product: productId, ...res.data };
     } catch (err) {
@@ -63,7 +63,7 @@ export const updateCartQuantity = createAsyncThunk(
       const token = getToken();
       const res = await axios.put(
         `${base_url}/cart/updateQuantity`,
-        { product: productId, quantity },
+        { productId, quantity },
         {
           headers: { Authorization: `Bearer ${token}` },
         }

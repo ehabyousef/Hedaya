@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import style from "./page.module.css";
 import { CiTrash } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import {
 } from "../../redux/slices/wishlistSlice";
 import { IoIosRepeat } from "react-icons/io";
 import Loading from "../../components/Loading";
+import Swal from "sweetalert2";
 
 export default function Wishlist() {
   const navigate = useNavigate();
@@ -26,8 +27,24 @@ export default function Wishlist() {
 
   const handleRemoveFromWishlist = async (productId) => {
     try {
-      await dispatch(removeFromWishlist(productId)).unwrap();
+      const res = await dispatch(removeFromWishlist(productId)).unwrap();
+      if (res?.message) {
+        Swal.fire({
+          icon: "success",
+          title: res.message,
+          toast: true,
+          position: "top-end",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+      // No full refetch here; slice already removed it optimistically
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: (error && error.message) || "Failed to remove from wishlist",
+      });
       console.error("Error removing from wishlist:", error);
     }
   };

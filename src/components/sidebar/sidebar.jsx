@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./page.module.css";
-import { MdDashboard, MdOutlineSettings } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
-import { GiHotMeal, GiShinyApple } from "react-icons/gi";
 import { Link, useLocation } from "react-router-dom";
 import { PiShirtFoldedDuotone } from "react-icons/pi";
 import { BsDatabaseAdd } from "react-icons/bs";
-import { IoIosLogOut } from "react-icons/io";
-import { toggleValue } from "../../redux/slices/TureOr";
 import { useDispatch } from "react-redux";
 function Sidebar() {
   const [choosen, setChoosen] = useState("Prdoucts");
@@ -18,7 +14,7 @@ function Sidebar() {
   //   dispatch(clearWishlist());
   //   localStorage.clear()
   //   dispatch(toggleValue());
-  // }; 
+  // };
   useEffect(() => {
     const path = location.pathname;
     if (path === "/dashboard") {
