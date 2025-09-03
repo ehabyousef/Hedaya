@@ -250,7 +250,7 @@ export default function ResetPassword(props) {
               {formErrors.confirmPassword && (
                 <div className="invalid-feedback d-block">
                   {formErrors.confirmPassword}
-                </div> 
+                </div>
               )}
             </div>
 
