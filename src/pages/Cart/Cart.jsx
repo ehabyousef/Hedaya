@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import style from "../Whishlist/page.module.css";
 import { CiTrash } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,14 +7,18 @@ import {
   removeFromCart,
   updateCartQuantity,
 } from "../../redux/slices/cartSlice";
+import { createOrder } from "../../redux/slices/orderSlice";
 import { IoIosRepeat } from "react-icons/io";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 export default function Cart() {
   const cart = useSelector((state) => state.cart.data || []);
   const cartInfo = useSelector((state) => state.cart.cartInfo);
   const loading = useSelector((state) => state.cart.loading);
+  const orderLoading = useSelector((state) => state.order.loading);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   // Helper to safely get product id from various shapes
   const getProductId = (item) =>
@@ -60,6 +64,42 @@ export default function Cart() {
     return total.toFixed(2);
   };
 
+  const handleCheckout = async () => {
+    if (!cart || cart.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Cart is empty",
+        text: "Please add items to your cart before checkout",
+      });
+      return;
+    }
+
+    setCheckoutLoading(true);
+    try {
+      const result = await dispatch(createOrder()).unwrap();
+
+      // API returns URL to redirect to Stripe for visa payment
+      if (result?.url) {
+        window.location.href = result?.url; // Navigate to Stripe checkout
+      } else {
+        // If no redirect URL, show error
+        Swal.fire({
+          icon: "error",
+          title: "Payment Error",
+          text: result?.message,
+        });
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Checkout Failed",
+        text: error.message || "Something went wrong during checkout",
+      });
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
   if (!isAuthenticated) {
     return (
       <div className="container text-center my-5">
@@ -154,7 +194,10 @@ export default function Cart() {
       {/* Cart Summary */}
       <div className="row justify-content-end my-4">
         <div className="col-md-6">
-          <div className="card p-3">
+          <div
+            className="card p-3"
+            style={{ background: "var(--brown)", color: "white" }}
+          >
             <h4>Cart Summary</h4>
             <div className="d-flex justify-content-between">
               <span>Total Items:</span>
@@ -169,8 +212,15 @@ export default function Cart() {
               <span>Total Price:</span>
               <span>${getTotalCartPrice()}</span>
             </div>
-            <button className="btn btn-primary mt-3">
-              Proceed to Checkout
+
+            <button
+              className="btn btn-primary mt-3 w-100"
+              onClick={handleCheckout}
+              disabled={checkoutLoading || orderLoading}
+            >
+              {checkoutLoading || orderLoading
+                ? "Processing..."
+                : "Pay with Credit Card"}
             </button>
           </div>
         </div>

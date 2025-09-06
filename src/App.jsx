@@ -9,6 +9,8 @@ import Loading from "./components/Loading";
 import Dashboard from "./pages/dashboeard/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Whishlist from "./pages/Whishlist/Whishlist";
+import SuccessPayment from "./pages/SuccessPayment/SuccessPayment";
+import CancelPayment from "./pages/CancelPayment/CancelPayment";
 const Navbar = lazy(() => import("./components/Navbar"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const Auth = lazy(() => import("./pages/Auth/Auth"));
@@ -92,6 +94,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="favourite" element={<Whishlist />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/successPayement" element={<SuccessPayment />} />
+            <Route path="/canceldPayement" element={<CancelPayment />} />
 
             {/* Protected Route for Dashboard */}
             <Route
