@@ -196,7 +196,7 @@ export default function Cart() {
         <div className="col-md-6">
           <div
             className="card p-3"
-            style={{ background: "var(--brown)", color: "white" }}
+            style={{ backgroundColor: "var(--brown)", color: "white" }}
           >
             <h4>Cart Summary</h4>
             <div className="d-flex justify-content-between">
