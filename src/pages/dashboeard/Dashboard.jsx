@@ -8,14 +8,13 @@ import Add from "./Add/Add";
 
 export default function Dashboard(props) {
   useEffect(() => {
-
-    props.showNav(false)
-    props.showFooter(false)
+    props.showNav(false);
+    props.showFooter(false);
     return () => {
-      props.showNav(true)
-      props.showFooter(true)
-    }
-  }, [props])
+      props.showNav(true);
+      props.showFooter(true);
+    };
+  }, [props]);
   return (
     <div className="d-flex">
       <Sidebar />

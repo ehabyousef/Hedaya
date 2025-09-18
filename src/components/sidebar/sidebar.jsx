@@ -33,7 +33,7 @@ function Sidebar() {
   return (
     <div className={style.main_div}>
       <Link to={"/"} className={style.logo}>
-        Fast Plate
+        hedaya
       </Link>
       <div className={style.divider}></div>
       <div className="d-flex flex-column gap-5 my-5 align-items-start ps-3 ps-lg-5">
